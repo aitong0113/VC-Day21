@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<!--  PWA -->
+<link rel="manifest" href="manifest.json">
+<!--  放入這三行開始 -->
+<link rel="icon" type="image/png" href="HeartWeather.png">
+<link rel="apple-touch-icon" href="HeartWeather.png">
+<link rel="apple-touch-icon" sizes="180x180" href="HeartWeather.png">
+<!--  放入這三行結束 -->
+<!-- 效果說明：
+• rel="icon"：一般瀏覽器的頁籤小 icon（favicon）、Android Chrome 也會用
+• apple-touch-icon：讓 iOS / iPadOS 在「加入主畫面」時，知道要用哪張圖
+• sizes="180x180"：告訴裝置這張圖的尺寸（給某些裝置參考用） -->
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>今日心天氣</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap">
+
+<style>
+:root {
+  --blue-main: #87a6c5;       /* 霧藍主色 */
+  --soft-pink: #e5f6ed;       /* 粉霧綠 */
+  --bg-blue: #F3F6FB;         /* 淡藍背景 */
+  --yellow: #F8D67A;
+  --text-gray: #4A4A4A;
+  --card-white: #FFFFFF;
+
+  --radius: 14px;
+}
+
+body {
+  background: var(--bg-blue);
+  font-family: 'Noto Sans TC', sans-serif;
+  padding: 24px;
+  color: var(--text-gray);
+}
+
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.title {
+  text-align: center;
+  font-size: 32px;
+  color: var(--blue-main);
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 16px;
+  margin-bottom: 28px;
+  color: #6d7b93;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 30px 0 14px;
+  color: #6d7b93;
+}
+
+.card {
+  background: var(--card-white);
+  padding: 20px;
+  border-radius: var(--radius);
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(106, 139, 229, 0.07);
+  border: 1px solid #e8ecf7;
+}
+
+.label {
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 12px;
+  display: block;
+  color: var(--blue-main);
+}
+
+.label small {
+  color: #8da0b8;
+  font-weight: 400;
+}
+
+.input-select,
+.input-text {
+  width: 100%;
+  padding: 12px;
+  border-radius: var(--radius);
+  border: 1.5px solid var(--soft-pink);
+  margin-top: 12px;
+  font-size: 15px;
+  background: #fafafa;
+}
+
+.checkbox-group {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px 12px;
+  margin-top: 12px;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.checkbox-group input[type="checkbox"] {
+  accent-color: var(--soft-pink);
+  width: 16px;
+  height: 16px;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 15px;
+  background: var(--blue-main);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 18px;
+  margin-top: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(106, 139, 229, 0.25);
+  transition: 0.2s ease;
+}
+
+.submit-btn:hover {
+  background: #6a8fc0;
+}
+
+.result {
+  min-height: 120px;
+  margin-top: 20px;
+}
+
+.placeholder {
+  color: #9ca3b4;
+  font-size: 15px;
+}
+
+/* 天氣結果卡片 */
+.weather-preview {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 24px;
+  margin-top: 20px;
+  box-shadow: 0 4px 10px rgba(140, 170, 220, 0.15);
+  border: 1px solid #e8ecf7;
+}
+
+.weather-title {
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 10px;
+  color: #6a8fc0;
+}
+
+.weather-reason {
+  text-align: center;
+  font-size: 16px;
+  color: #72809a;
+  margin-bottom: 18px;
+}
+
+.weather-box {
+  background: #f7f9fb;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid #e3e8f0;
+}
+
+.weather-subtitle {
+  font-weight: 600;
+  color: #6a8fc0;
+  margin-bottom: 6px;
+}
+
+.weather-list {
+  padding-left: 18px;
+  color: #555;
+}
+
+.weather-end {
+  text-align: center;
+  margin-top: 18px;
+  color: #8ca3bb;
+}
+
+/* LOGO */
+.logo-box {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.logo-img {
+  width: 120px;      /* Logo 大小可調整 */
+  height: auto;
+  margin-top: 10px;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+}
+</style>
+</head>
+
+<body>
+  <!-- LOGO -->
+  <div class="logo-box">
+    <img src="HeartWeather.png" alt="心天氣 Logo" class="logo-img">
+  </div>
+
+  <div class="container">
+<div class="container">
+
+  <h1 class="title">《今日心天氣》</h1>
+  <p class="subtitle">為你播報內心的天氣能量</p>
+
+  <!-- ⭐ Section 1：亮度 -->
+  <h3 class="section-title">⭐ 昨晚睡得好嗎？</h3>
+
+  <div class="card">
+    <label class="label">
+      為我的睡眠分數打分數（0–10 分）
+      <br><small>你的身體也有天氣，我想知道它今天是晴朗一點，還是需要多休息的雲。</small>
+    </label>
+    <select id="sleep" class="input-select">
+      <option value="">請選擇</option>
+      <option>0</option><option>1</option><option>2</option><option>3</option><option>4</option>
+      <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+    </select>
+  </div>
+
+  <!-- 身體狀態 -->
+  <div class="card">
+    <label class="label">
+      你的身體感覺起來是…
+      <br><small>沒關係，我陪你一起看看現在的雲層。</small>
+    </label>
+
+    <div class="checkbox-group">
+      <label><input type="checkbox" value="無症狀"> 無症狀</label>
+      <label><input type="checkbox" value="輕微疲倦"> 輕微疲倦</label>
+      <label><input type="checkbox" value="肩頸緊"> 肩頸緊</label>
+      <label><input type="checkbox" value="想睡"> 想睡</label>
+      <label><input type="checkbox" value="小頭暈"> 小頭暈</label>
+      <label><input type="checkbox" value="肚子在滾"> 肚子在滾</label>
+      <label><input type="checkbox" value="胸悶"> 胸悶</label>
+      <label><input type="checkbox" value="明顯疲累"> 明顯疲累</label>
+      <label><input type="checkbox" value="焦慮"> 焦慮</label>
+      <label><input type="checkbox" value="想哭"> 想哭</label>
+      <label><input type="checkbox" value="反覆頭暈"> 反覆頭暈</label>
+      <label><input type="checkbox" value="強烈焦慮"> 強烈焦慮</label>
+    </div>
+
+    <input type="text" class="input-text" placeholder="想補充的身體感受…也可以讓我知道">
+  </div>
+
+  <!-- 心情 -->
+  <h3 class="section-title">💙 你的心情天氣</h3>
+
+  <div class="card">
+    <label class="label">
+      你的心，今天像什麼天氣呢？
+      <br><small>不需要想太多，用感覺回答就好。</small>
+    </label>
+
+    <div class="checkbox-group">
+      <label><input type="checkbox" value="穩定"> 穩定</label>
+      <label><input type="checkbox" value="平靜"> 平靜</label>
+      <label><input type="checkbox" value="普通"> 普通</label>
+      <label><input type="checkbox" value="小煩悶"> 小煩悶</label>
+      <label><input type="checkbox" value="小低落"> 小低落</label>
+      <label><input type="checkbox" value="明顯低落"> 明顯低落</label>
+      <label><input type="checkbox" value="胸口悶"> 胸口悶</label>
+      <label><input type="checkbox" value="焦慮">焦慮</label>
+      <label><input type="checkbox" value="情緒不穩"> 情緒不穩</label>
+      <label><input type="checkbox" value="想哭"> 想哭</label>
+    </div>
+
+    <input type="text" class="input-text" placeholder="此刻心裡的聲音…想說什麼都可以">
+  </div>
+
+  <!-- 前進方向 -->
+  <h3 class="section-title">✨ 今天想前進的方向</h3>
+
+  <div class="card">
+    <label class="label">
+      今天想前進的方向（1–3 項）
+      <br><small>不需要很大步，只要是你想靠近的，就值得被放進今天。</small>
+    </label>
+
+    <div class="checkbox-group">
+      <label><input type="checkbox" value="工作/學業">工作 / 學業</label>
+      <label><input type="checkbox" value="個人專案/創作">個人專案 / 創作</label>
+      <label><input type="checkbox" value="學習新技能">學習新技能</label>
+      <label><input type="checkbox" value="重要文件處理">處理重要文件</label>
+      <label><input type="checkbox" value="家務整理">家務 / 生活整理</label>
+      <label><input type="checkbox" value="財務行政">財務 / 行政處理</label>
+      <label><input type="checkbox" value="規劃ToDo">整理筆記 / 規劃 To-do</label>
+      <label><input type="checkbox" value="陪伴家人">照顧與陪伴家人</label>
+      <label><input type="checkbox" value="身心照顧">身心照顧</label>
+      <label><input type="checkbox" value="散步伸展">散步 / 伸展</label>
+      <label><input type="checkbox" value="喝杯喜歡的飲品">喝喜歡的飲品</label>
+      <label><input type="checkbox" value="心情書寫">心情書寫 / 沉澱</label>
+      <label><input type="checkbox" value="今天想休息">今天想休息</label>
+    </div>
+
+    <input type="text" class="input-text" placeholder="還有什麼是你想慢慢靠近的呢？">
+  </div>
+
+  <!-- 時間 -->
+  <h3 class="section-title">🕒 今天的可用時間</h3>
+
+  <div class="card">
+    <label class="label">
+      今天的可用時間是…
+      <br><small>不論長短，我會把節奏調整到你舒服的步伐。</small>
+    </label>
+
+    <select id="time" class="input-select">
+      <option value="">請選擇</option>
+      <option>只有一點點時間（30–60 分）</option>
+      <option>可以做一小段事情（1–2 小時）</option>
+      <option>我有些許空檔（2–4 小時）</option>
+      <option>半天左右</option>
+      <option>今天比較自由（整天）</option>
+    </select>
+
+    <input type="text" class="input-text" placeholder="或你想自己決定時間…也可以寫給我">
+  </div>
+
+  <!-- 按鈕 -->
+  <button class="submit-btn">🌤 看看我今天的心天氣</button>
+
+  <!-- 結果展示 -->
+  <div class="result" id="result">
+    <p class="placeholder">等一下，我正在讀取你的心天氣…</p>
+  </div>
+
+</div>
+
+<!-- JS：心天氣計算邏輯 -->
+<script>
+document.querySelector(".submit-btn").addEventListener("click", generateWeather);
+
+function generateWeather() {
+  const sleep = Number(document.getElementById("sleep").value);
+  const bodyChecks = [...document.querySelectorAll('.card:nth-of-type(2) input[type="checkbox"]:checked')].map(x => x.value);
+  const moodChecks = [...document.querySelectorAll('.card:nth-of-type(3) input[type="checkbox"]:checked')].map(x => x.value);
+  const time = document.getElementById("time").value;
+
+  const resultCard = document.getElementById("result");
+
+  if (!sleep && sleep !== 0) {
+    resultCard.innerHTML = `<p class="placeholder">🌧 填一下昨晚睡眠分數，我才能看懂心天氣唷。</p>`;
+    return;
+  }
+
+  let weather = "";
+  let reason = "";
+  let suggestion = "";
+
+  if (sleep >= 7 && moodChecks.includes("穩定")) {
+    weather = "☀️ 晴朗";
+    reason = "你今天的身心亮度都很不錯，情緒穩穩的。";
+    suggestion = "可以安排一些需要專注的事，創作或學習都會很順。";
+  }
+
+  else if (sleep >= 5 && moodChecks.some(m => ["普通", "平靜"].includes(m))) {
+    weather = "🌤 微晴";
+    reason = "你的基底狀態是穩定的，只是有些小雲正在飄。";
+    suggestion = "做一點輕量任務會蠻剛好的，像是整理桌面或看看筆記。";
+  }
+
+  else if (
+    bodyChecks.includes("胸悶") ||
+    moodChecks.includes("小低落") ||
+    moodChecks.includes("小煩悶")
+  ) {
+    weather = "☁️ 陰陰的";
+    reason = "你的身體或心有些悶悶的雲層，沒有壞，只是提醒你慢一點。";
+    suggestion = "喝點溫水、伸展一下，做些低負荷的小事就已經很棒。";
+  }
+
+  else if (
+    moodChecks.includes("情緒不穩") ||
+    moodChecks.includes("想哭") ||
+    bodyChecks.includes("強烈焦慮")
+  ) {
+    weather = "🌧 小雨";
+    reason = "有些情緒或焦慮正在落雨，你很努力了。";
+    suggestion = "今天適合多讓自己休息，身心需要被接住。";
+  }
+
+  else if (sleep <= 2 && bodyChecks.includes("明顯疲累")) {
+    weather = "⛈ 暴雨";
+    reason = "你的身體正在發出明顯訊號，需要完整的休息。";
+    suggestion = "請優先休息，吃東西、喝水、躺下，讓身體先回來。";
+  }
+
+  else {
+    weather = "🌥 淡淡的雲";
+    reason = "有些說不出的感覺在飄，但沒關係，我在。";
+    suggestion = "做一件最簡單、最不費力的事，就是今天的任務。";
+  }
+
+  resultCard.innerHTML = `
+    <div class="weather-preview">
+      <h2 class="weather-title">${weather}</h2>
+      <p class="weather-reason">${reason}</p>
+
+      <div class="weather-box">
+        <p class="weather-subtitle">🌦 今天的建議節奏：</p>
+        <ul class="weather-list">
+          <li>${suggestion}</li>
+        </ul>
+      </div>
+
+      <p class="weather-end">我在，你不用一個人面對今天的天氣。</p>
+    </div>
+  `;
+}
+</script>
+
+</body>
+</html>
+
+
