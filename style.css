@@ -203,7 +203,7 @@ body {
     color: #fff;
     border: none;
     border-radius: var(--radius);
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 600;
     margin-top: 16px;
     cursor: pointer;
@@ -334,7 +334,7 @@ body {
 
     .history-btn {
         font-size: 14px;
-        padding: 12px;
+        padding: 16px;
     }
 
     .weather-card {

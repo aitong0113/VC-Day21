@@ -9,7 +9,7 @@
     <!-- 外部 CSS -->
     <link rel="stylesheet" href="style2.css" />
 
-    <!-- 內嵌補充樣式（僅頁面框架） -->
+    <!-- 內嵌補充樣式（只保留基本框架，不覆蓋寬度） -->
     <style>
         body {
             font-family: 'Noto Sans TC', sans-serif;
@@ -23,11 +23,6 @@
             color: var(--blue-main);
             font-size: 30px;
         }
-
-        .history-table-wrapper {
-            max-width: 960px;
-            margin: 0 auto;
-        }
     </style>
 </head>
 
@@ -36,12 +31,12 @@
     <!-- ⭐ 主標題 -->
     <h1>📘 我的心天氣紀錄</h1>
 
-    <!-- ⭐ 表格 / 手機卡片將插入這裡 -->
+    <!-- ⭐ 表格 / 卡片會插入在這裡 -->
     <div class="history-table-wrapper">
         <section id="historyOutput" class="history-section"></section>
     </div>
 
-    <!-- ⭐ 整合版 JS（純紀錄頁） -->
+    <!-- ⭐ JS -->
     <script src="script2.js"></script>
 
 </body>

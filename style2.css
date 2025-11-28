@@ -53,7 +53,7 @@ body { --mobile-flag: false; }
     box-shadow: var(--shadow);
     border: 1px solid #e0e6ef;
     overflow-x: auto;
-    max-width: 1150px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
@@ -111,25 +111,24 @@ body { --mobile-flag: false; }
 /* ------------------------------------------------------
    📱 手機版卡片模式
 ------------------------------------------------------ */
-@media (max-width: 480px) {
+/* 手機版卡片模式 — 改成 600px */
+@media (max-width: 600px) {
 
-    /* 隱藏表格（只顯示卡片） */
+    /* 隱藏表格 */
     .history-table-wrapper table {
         display: none;
     }
 
-    /* 卡片列表 */
     .history-card-list {
         display: flex;
         flex-direction: column;
         gap: 18px;
         margin-top: 10px;
-        max-width: 1000px;
         margin-left: auto;
         margin-right: auto;
+        max-width: 100%;
     }
 
-    /* 卡片 */
     .history-card {
         background: #ffffff;
         padding: 18px 16px;
@@ -138,70 +137,25 @@ body { --mobile-flag: false; }
         border: 1px solid #e6eaf0;
     }
 
-    /* 每一列資訊 */
     .history-card .row {
         display: flex;
         justify-content: space-between;
-        align-items: flex-start;
         margin-bottom: 12px;
     }
 
-    /* 標籤 */
     .history-card .label {
         color: #7b8a9c;
         font-size: 13px;
         font-weight: 600;
-        width: 70px;  /* 固定寬度讓排版整齊 */
+        width: 70px;
         flex-shrink: 0;
     }
 
-    /* 內容文字 */
     .history-card .row span:last-child {
         font-size: 15px;
         color: #4a4a4a;
         font-weight: 600;
         text-align: right;
         line-height: 1.5;
-        white-space: normal;
-        word-break: break-word;
-    }
-
-    /* 天氣 emoji */
-    .history-card .weather {
-        font-size: 16px !important;
-        color: #7b8a9c;
-    }
-
-    /* 建議（最後一欄會自然換行） */
-    .history-card .row:last-child span:last-child {
-        font-weight: 500;
-        color: #4a4a4a;
-        max-width: 100%;
-        white-space: normal;
-    }
-
-    /* 分隔線 */
-    .history-card .row:not(:last-child) {
-        border-bottom: 1px solid #f2f4f7;
-        padding-bottom: 8px;
-    }
-}
-
-/* ------------------------------------------------------
-   📱 手機排版微調（間距 / 字級）
------------------------------------------------------- */
-@media (max-width: 480px) {
-    body {
-        padding: 16px;
-    }
-
-    .history-title {
-        font-size: 22px;
-        margin-bottom: 20px;
-    }
-
-    .history-table-wrapper {
-        padding: 14px;
-        border-radius: 12px;
     }
 }
