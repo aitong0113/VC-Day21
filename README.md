@@ -67,8 +67,8 @@ Keyword	Tag	Score
 
 首次進入網站會建立：
 
-localStorage.myUUID
-localStorage.userMap
+```localStorage.myUUID
+localStorage.userMap```
 
 每位使用者都會被分配成 user1 / user2 / user3…
 用於 Google Sheet 資料區隔。
@@ -82,13 +82,14 @@ localStorage.userMap
 
 📂 專案結構（Project Structure）
 
-VC-Day21/
+
+```VC-Day21/
 │
 ├── index.html        # 今日心天氣首頁
 ├── history.html      # 歷史紀錄頁
 ├── style.css         # 主樣式
-├── script.js         # JS 主程式（分析＋寫入＋讀取）
-└── /images           # 圖片資源（如 icon）
+├── script.js         # JS 主程式（分析 + 寫入 + 讀取）
+└── images/           # 圖片資源（icon 等）```
 
 ⸻
 
