@@ -1,166 +1,187 @@
 //-----------------------------------------
-// 🌤 今日心天氣 · 最終版（含自由輸入情緒判讀）
+// 🌤 今日心天氣 · AI 智能版（工程師重構版）
 //-----------------------------------------
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    const btn = document.querySelector(".submit-btn");
-    const resultBox = document.getElementById("result");
-    const weatherOutput = document.getElementById("weatherOutput");
-    const loadingText = document.getElementById("loadingText");
+    //-----------------------------------------
+    // 📌 DOM 統一集中管理
+    //-----------------------------------------
+    const DOM = {
+        btn: document.querySelector(".submit-btn"),
+        resultBox: document.getElementById("result"),
+        loading: document.getElementById("loadingText"),
+        output: document.getElementById("weatherOutput"),
 
-    btn.addEventListener("click", generateWeather);
+        sleep: document.getElementById("sleep"),
+        bodyFree: document.getElementById("body-free"),
+        moodFree: document.getElementById("mood-free"),
+    };
 
-    // 工具：讀取 checkbox 群組
-    function getCheckedValues(selector) {
-        return [...document.querySelectorAll(`${selector} input[type="checkbox"]:checked`)]
-            .map(x => x.value);
+    //-----------------------------------------
+    // 📌 Checkbox 工具
+    //-----------------------------------------
+    const getChecked = id =>
+        [...document.querySelectorAll(`#${id} input[type="checkbox"]:checked`)]
+            .map(el => el.value);
+
+    //-----------------------------------------
+    // 📌 合併工具（去重）
+    //-----------------------------------------
+    const mergeUnique = (a, b) => [...new Set([...a, ...b])];
+
+    //-----------------------------------------
+    // 📌 AI 弱語意模型（資料集中管理）
+    //-----------------------------------------
+    const EMOTION_RULES = [
+        { kw: ["累", "疲", "倦", "撐"], score: -3, out: "明顯疲累" },
+        { kw: ["緊", "僵"], score: -2, out: "肩頸緊" },
+        { kw: ["暈", "頭重"], score: -2, out: "小頭暈" },
+        { kw: ["悶", "壓"], score: -3, out: "胸悶" },
+        { kw: ["焦", "不安"], score: -4, out: "焦慮" },
+        { kw: ["煩"], score: -2, out: "小煩悶" },
+        { kw: ["低落", "難過"], score: -3, out: "小低落" },
+        { kw: ["哭", "淚"], score: -4, out: "想哭" },
+        { kw: ["亂", "爆掉", "不穩"], score: -5, out: "情緒不穩" },
+
+        // 正向
+        { kw: ["還好", "平靜", "ok", "可以"], score: +2, out: "平靜" },
+        { kw: ["穩", "安定"], score: +3, out: "穩定" },
+    ];
+
+    //-----------------------------------------
+    // 📌 AI 語意分析
+    //-----------------------------------------
+    function analyzeEmotion(text) {
+        if (!text) return { score: 0, inferred: [] };
+
+        let score = 0;
+        let inferred = [];
+        const t = text.toLowerCase();
+
+        EMOTION_RULES.forEach(rule => {
+            rule.kw.forEach(k => {
+                if (t.includes(k)) {
+                    score += rule.score;
+                    inferred.push(rule.out);
+                }
+            });
+        });
+
+        return { score, inferred };
     }
 
-    // 工具：自由輸入 → 關鍵字判讀
-    function detectKeywords(text) {
-        const lower = text.toLowerCase();
+    //-----------------------------------------
+    // ⭐ 分數計算（拆成小 Functions）
+    //-----------------------------------------
 
-        const keywordMap = {
-            "疲": "明顯疲累",
-            "累": "明顯疲累",
-            "倦": "輕微疲倦",
-            "撐": "明顯疲累",
-
-            "緊": "肩頸緊",
-            "僵": "肩頸緊",
-
-            "暈": "小頭暈",
-            "頭重": "小頭暈",
-
-            "悶": "胸悶",
-            "壓": "胸悶",
-
-            "焦": "焦慮",
-            "不安": "焦慮",
-
-            "煩": "小煩悶",
-            "低落": "小低落",
-            "難過": "小低落",
-
-            "哭": "想哭",
-            "淚": "想哭",
-
-            "亂": "情緒不穩",
-        };
-
-        let detected = [];
-
-        for (let key in keywordMap) {
-            if (lower.includes(key)) detected.push(keywordMap[key]);
-        }
-
-        return detected;
+    function calcSleepScore(sleep) {
+        return sleep * 2; // 中性 5 → 10 分
     }
 
-    // 🌤 主運算
+    function calcBodyScore(list) {
+        let score = 0;
+        list.forEach(item => {
+            if (["明顯疲累", "胸悶"].includes(item)) score -= 3;
+            if (["肩頸緊", "小頭暈", "反覆頭暈"].includes(item)) score -= 1;
+            if (["強烈焦慮"].includes(item)) score -= 4;
+        });
+        return score;
+    }
+
+    function calcMoodScore(list) {
+        let score = 0;
+        list.forEach(m => {
+            if (["情緒不穩", "想哭", "明顯低落"].includes(m)) score -= 3;
+            if (["小煩悶", "小低落", "胸口悶"].includes(m)) score -= 1;
+            if (["平靜"].includes(m)) score += 2;
+            if (["穩定"].includes(m)) score += 4;
+        });
+        return score;
+    }
+
+    function calcFreeTextScore(bodyAI, moodAI) {
+        return (bodyAI.score + moodAI.score) * 0.3; // 降低權重
+    }
+
+    //-----------------------------------------
+    // ☁️ 天氣決定器（獨立）
+    //-----------------------------------------
+    function getWeatherResult(score) {
+        if (score >= 18)
+            return ["☀️ 晴朗", "你今天能量很足，心很亮。", "適合進度、創作、挑戰。"];
+
+        if (score >= 10)
+            return ["🌤 微晴", "整體穩定，只有小雲。", "輕量節奏，動靜皆宜。"];
+
+        if (score >= 4)
+            return ["☁️ 陰陰的", "有些累，但你依然很努力。", "做最簡單的一件事就好。"];
+
+        if (score >= -3)
+            return ["🌧 小雨", "身心在耗能，需要慢下來。", "休息一下，讓自己被接住。"];
+
+        return ["⛈ 暴雨", "你今天承受很多。", "優先照顧心和身。"];
+    }
+
+    //-----------------------------------------
+    // 🎨 Render 結果（獨立）
+    //-----------------------------------------
+    function renderWeather(weather, reason, suggestion) {
+        DOM.output.innerHTML = `
+            <div class="weather-card">
+                <div class="weather-tag">${weather}</div>
+                <p class="weather-text">${reason}</p>
+
+                <div class="weather-stats-box">
+                    <p class="main-accent-title">⚡ 今日的建議節奏：</p>
+                    <ul class="weather-advice"><li>${suggestion}</li></ul>
+                </div>
+
+                <p class="weather-end">我陪著你，你不用一個人面對今天的天氣。</p>
+            </div>
+        `;
+    }
+
+    //-----------------------------------------
+    // 🌤 主邏輯（變得超乾淨）
+    //-----------------------------------------
     function generateWeather() {
 
-        const sleep = Number(document.getElementById("sleep").value);
+        // ⭐ 睡眠（可空 → 中性 5）
+        const sleep = DOM.sleep.value === "" ? 5 : Number(DOM.sleep.value);
 
-        const body = getCheckedValues("#body-group");
-        const mood = getCheckedValues("#mood-group");
+        const body = getChecked("body-group");
+        const mood = getChecked("mood-group");
 
-        const bodyFreeText = document.querySelector("#body-free")?.value || "";
-        const moodFreeText = document.querySelector("#mood-free")?.value || "";
+        const bodyAI = analyzeEmotion(DOM.bodyFree.value);
+        const moodAI = analyzeEmotion(DOM.moodFree.value);
 
-        // ➤ 自由輸入 + 關鍵字推論
-        const bodyFromText = detectKeywords(bodyFreeText);
-        const moodFromText = detectKeywords(moodFreeText);
+        const finalBody = mergeUnique(body, bodyAI.inferred);
+        const finalMood = mergeUnique(mood, moodAI.inferred);
 
-        // ➤ 合併（不重複）
-        const finalBody = [...new Set([...body, ...bodyFromText])];
-        const finalMood = [...new Set([...mood, ...moodFromText])];
+        // 📌 計算總分
+        const score =
+            calcSleepScore(sleep) +
+            calcBodyScore(finalBody) +
+           calcMoodScore(finalMood) +
+            calcFreeTextScore(bodyAI, moodAI);
 
-        // 展示區初始化
-        resultBox.style.display = "block";
-        weatherOutput.style.display = "none";
-        loadingText.style.display = "block";
+        // UI Loading
+        DOM.resultBox.style.display = "block";
+        DOM.loading.style.display = "block";
+        DOM.output.style.display = "none";
+        DOM.loading.innerText = "等一下，我正在讀取你的心天氣…";
 
-        if (!sleep && sleep !== 0) {
-            loadingText.innerText = "🌧 填一下睡眠分數，我才能看懂心天氣唷。";
-            return;
-        }
-
-        loadingText.innerText = "等一下，我正在讀取你的心天氣…";
-        weatherOutput.innerHTML = "";
-
-        // 🌦 規則
-        const rules = [
-            {
-                match: sleep >= 7 && finalMood.includes("穩定"),
-                weather: "☀️ 晴朗",
-                reason: "你今天的身心亮度都很不錯，情緒穩穩的。",
-                suggestion: "可以安排需要專注的任務，創作或學習都很順。",
-            },
-            {
-                match: sleep >= 5 && finalMood.some(m => ["普通", "平靜"].includes(m)),
-                weather: "🌤 微晴",
-                reason: "你的基底狀態是穩定的，只是有些小雲飄著。",
-                suggestion: "做一些輕量任務，例如整理桌面或複習筆記。",
-            },
-            {
-                match: finalBody.includes("胸悶") ||
-                       finalMood.includes("小低落") ||
-                       finalMood.includes("小煩悶"),
-                weather: "☁️ 陰陰的",
-                reason: "身體或心有些悶悶的雲層。",
-                suggestion: "喝點溫水、伸展一下，做些低負荷小事就很棒。",
-            },
-            {
-                match: finalMood.includes("情緒不穩") ||
-                       finalMood.includes("想哭") ||
-                       finalBody.includes("強烈焦慮"),
-                weather: "🌧 小雨",
-                reason: "情緒或焦慮正在落雨，但你很努力了。",
-                suggestion: "適合好好休息，讓自己被接住。",
-            },
-            {
-                match: sleep <= 2 && finalBody.includes("明顯疲累"),
-                weather: "⛈ 暴雨",
-                reason: "身體正在發出明顯訊號需要休息。",
-                suggestion: "請優先休息，喝水、補充食物、躺下。",
-            }
-        ];
-
-        // 預設（如果都沒命中）
-        let weather = "🌥 淡淡的雲";
-        let reason = "有些說不出的感覺，但沒關係。";
-        let suggestion = "做一件最簡單、最不費力的事，就是今天的任務。";
-
-        for (let r of rules) {
-            if (r.match) {
-                weather = r.weather;
-                reason = r.reason;
-                suggestion = r.suggestion;
-                break;
-            }
-        }
-
-        // 顯示結果
         setTimeout(() => {
-            loadingText.style.display = "none";
-            weatherOutput.style.display = "block";
-            weatherOutput.classList.add("fade-in");
-
-            weatherOutput.innerHTML = `
-                <div class="weather-card">
-                    <div class="weather-tag">${weather}</div>
-                    <p class="weather-text">${reason}</p>
-
-                    <div class="weather-stats-box">
-                        <p class="main-accent-title">⚡ 今日的建議節奏：</p>
-                        <ul class="weather-advice"><li>${suggestion}</li></ul>
-                    </div>
-
-                    <p class="weather-end">我陪著你，你不用一個人面對今天的天氣。</p>
-                </div>
-            `;
-        }, 1000);
+            const [weather, reason, suggestion] = getWeatherResult(score);
+            DOM.loading.style.display = "none";
+            DOM.output.style.display = "block";
+            renderWeather(weather, reason, suggestion);
+        }, 900);
     }
+
+    //-----------------------------------------
+    // 🔘 事件啟動
+    //-----------------------------------------
+    DOM.btn.addEventListener("click", generateWeather);
 });
