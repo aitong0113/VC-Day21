@@ -90,7 +90,6 @@ VC-Day21/
 ├── script.js         # JS 主程式（分析＋寫入＋讀取）
 └── /images           # 圖片資源（如 icon）
 
-
 ⸻
 
 🚀 使用方式（How to Use）
