@@ -85,13 +85,13 @@ function generateWeather() {
       <p class="weather-reason">${reason}</p>
 
       <div class="weather-box">
-        <p class="weather-subtitle">🌦 今天的建議節奏：</p>
+        <p class="weather-subtitle">🌦 今日的建議節奏：</p>
         <ul class="weather-list">
           <li>${suggestion}</li>
         </ul>
       </div>
 
-      <p class="weather-end">我在，你不用一個人面對今天的天氣。</p>
+      <p class="weather-end">我陪著你，你不用一個人面對今天的天氣。</p>
     </div>
   `;
 }
