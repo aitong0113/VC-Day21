@@ -284,28 +284,28 @@ body {
 
     .title {
         font-size: 22px;
-        margin: 10px 0 16px;
+        margin: 6px 0 20px;
     }
 
+    /* ✦ 導入更柔的段落配置 */
+    p, .intro-text, .weather-text, .weather-end {
+        line-height: 1.68;
+        max-width: 34em;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Intro 卡片：更小、更呼吸感 */
     .intro-card {
         padding: 20px 18px;
         margin: 0 0 24px;
         border-radius: 12px;
-        text-align: left;
     }
 
     .intro-title { 
         font-size: 17px;
-        font-weight: 700;
-        text-align: center;
-        margin-bottom: 14px;
-    }
-
-    .intro-text  { 
-        font-size: 14px;
-        line-height: 1.62;
-        margin-bottom: 14px;
-        text-align: left;
+        margin-bottom: 6px;
+        line-height: 1.4;
     }
 
     .intro-sign  { 
@@ -329,13 +329,15 @@ body {
     .label { font-size: 15px; }
     .label small { font-size: 13px; }
 
-    .input-select, .input-text {
-        font-size: 14px;
-        padding: 11px 12px;
+    /* 表單 + 下拉框 */
+    .input-select,
+    .input-text {
+        padding: 12px;
+        font-size: 15px;
         border-radius: 10px;
     }
 
-    /* 📌 iPhone 最終修正版 checkbox（絕對不歪） */
+    /* Checkbox：兩欄但不會擠爆 */
     .checkbox-group {
         grid-template-columns: 1fr 1fr;
         gap: 12px 12px;
@@ -343,31 +345,72 @@ body {
     }
 
     .checkbox-group label {
-        font-size: 14.5px;
+        font-size: 15px;
+        line-height: 1.45;
+        white-space: nowrap;    /* 避免掉 1～2 字到下一行 */
         display: flex;
         align-items: center;
         gap: 10px;
     }
 
+    /* Checkbox 勾勾 iPhone 對齊修正 */
     .checkbox-group input[type="checkbox"] {
+        appearance: none;
+        -webkit-appearance: none;
         width: 20px;
         height: 20px;
-        border-radius: 6px;
-        margin-top: 1px;
+        border-width: 2px;
+        border-radius: 5px;
     }
 
+    .checkbox-group input[type="checkbox"]:checked::after {
+        content: "✔";
+        font-size: 15px;
+        position: absolute;
+        top: 0px;
+        left: 4px;
+    }
+
+    /* 按鈕 */
+    .submit-btn {
+        font-size: 16.5px;
+        padding: 15px;
+        border-radius: 12px;
+        margin: 10px 0 20px;
+    }
+
+    /* 結果卡片 */
     .weather-card {
         padding: 26px 18px;
         border-radius: 18px;
         margin: 28px 0 34px;
     }
 
-    .weather-tag { font-size: 22px; }
-    .weather-text { font-size: 15px; }
-    .weather-advice { font-size: 14.5px; }
+    .weather-tag {
+        font-size: 22px;
+        margin-bottom: 10px;
+        line-height: 1.4;
+    }
 
-    .weather-subtext { font-size: 15px; margin-bottom: 24px; }
-    .weather-end { font-size: 14.5px; margin-top: 20px; }
+    .weather-text {
+        font-size: 15.5px;
+        margin-bottom: 18px;
+    }
+
+    .weather-stats-box {
+        padding: 16px 14px;
+        border-radius: 14px;
+    }
+
+    .weather-advice {
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    .weather-end {
+        font-size: 14.5px;
+        margin-top: 22px;
+    }
 
     .app-footer {
         font-size: 12px;
