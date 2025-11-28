@@ -5,12 +5,7 @@
        style="border-radius: 12px; box-shadow: 0 4px 18px rgba(0,0,0,0.15);" />
 </p>
 
-<h1 align="center">☁️ 今日心天氣 Heart Weather</h1>
-<p align="center">你的每日心理狀態 × AI 小建議</p>
-<br>
-
-
-🌤️ 今日心天氣（Today’s Inner Weather）
+<h1 align="center">🌤️ 今日心天氣（Today’s Inner Weather）</h4>
 
 一個以 情緒 × 天氣隱喻 打造的療癒系 Web 小工具。
 使用者可以依照當下狀態選擇「今日心情天氣」，系統會回傳對應的建議節奏，並自動保存個人紀錄。
