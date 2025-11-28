@@ -101,6 +101,8 @@ VC-Day21/
 	5.	資料會自動寫入 Google Sheet
 	6.	點選「查看心天氣紀錄」→ 進入歷史頁面查看完整紀錄
 
+
+⸻
 ⸻
 
 🌐 Demo 網址（GitHub Pages）
