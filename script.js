@@ -257,3 +257,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
+
+console.log("body-free:", bodyFree);
+console.log("mood-free:", moodFree);
+console.log("note 寫入:", moodFree + " / " + bodyFree);
