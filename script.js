@@ -2,6 +2,7 @@
 // 🌤 今日心天氣 · 主功能（完整可直接貼）
 //-----------------------------------------
 
+
 // 主要 DOM
 const btn = document.querySelector(".submit-btn");
 const resultBox = document.getElementById("result");

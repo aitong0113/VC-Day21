@@ -1,5 +1,7 @@
 //即使 沒網路也能開啟網站
 
+   
+
 const cacheName = "心天氣-v1";
 const filesToCache = [
   "./",
