@@ -181,6 +181,8 @@ body {
     transform: translateY(-0.5px);   /* 微調上下 */
     font-size: 14px;
     color: #4a4a4a;
+    top: -3px;
+    left: 2.5px;
 }
 
 /* Button */
