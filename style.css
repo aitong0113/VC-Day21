@@ -23,7 +23,12 @@ body {
     line-height: 1.6;
     box-sizing: border-box;
 }
-*, *::before, *::after { box-sizing: inherit; }
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
 
 /* Layout */
 .container {
@@ -32,8 +37,15 @@ body {
 }
 
 /* Logo */
-.logo-box { text-align: center; margin-bottom: 10px; }
-.logo-img { width: 140px; height: auto; }
+.logo-box {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.logo-img {
+    width: 140px;
+    height: auto;
+}
 
 /* Title */
 .title {
@@ -91,8 +103,15 @@ body {
 
 /* Intro Animation */
 @keyframes fadeIntro {
-    from { opacity: 0; transform: translateY(10px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Card */
@@ -120,7 +139,8 @@ body {
 }
 
 /* Input */
-.input-select, .input-text {
+.input-select,
+.input-text {
     width: 100%;
     padding: 12px;
     border-radius: var(--radius);
@@ -129,17 +149,19 @@ body {
     background: #fafafa;
     font-size: 15px;
 }
-.input-select:focus, .input-text:focus {
+
+.input-select:focus,
+.input-text:focus {
     outline: none;
     border-color: var(--blue-main);
     background: #ffffff;
-    box-shadow: 0 0 0 3px rgba(135,166,197,0.15);
+    box-shadow: 0 0 0 3px rgba(135, 166, 197, 0.15);
 }
 
 /* Checkbox Group */
 .checkbox-group {
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 12px 16px;
     margin-top: 12px;
 }
@@ -186,7 +208,7 @@ body {
     font-weight: 600;
     margin-top: 16px;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(135,166,197,0.25);
+    box-shadow: 0 4px 12px rgba(135, 166, 197, 0.25);
 }
 
 /* 查看紀錄按鈕 */
@@ -214,23 +236,43 @@ body {
 }
 
 /* Result */
-.result { min-height: 120px; margin-top: 24px; }
-.placeholder { color: #a1aab7; font-size: 15px; }
+.result {
+    min-height: 120px;
+    margin-top: 24px;
+}
+
+.placeholder {
+    color: #a1aab7;
+    font-size: 15px;
+}
 
 /* Weather Card */
 .weather-card {
     background: #ffffff;
     padding: 36px 30px;
     border-radius: 24px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
     border: 1px solid #e6ebf2;
     margin: 40px auto;
     text-align: center;
 }
 
-.weather-tag { font-size: 28px; margin-bottom: 16px; color: #6a87b6; }
-.weather-subtext { font-size: 18px; color: var(--blue-main); margin-bottom: 28px; }
-.weather-advice { font-size: 16px; line-height: 1.7; }
+.weather-tag {
+    font-size: 28px;
+    margin-bottom: 16px;
+    color: #6a87b6;
+}
+
+.weather-subtext {
+    font-size: 18px;
+    color: var(--blue-main);
+    margin-bottom: 28px;
+}
+
+.weather-advice {
+    font-size: 16px;
+    line-height: 1.7;
+}
 
 .weather-stats-box {
     background: #f7faff;
@@ -328,6 +370,7 @@ body {
 
 /* 手機版 RWD */
 @media (max-width: 480px) {
+
     .history-table td,
     .history-table th {
         padding: 10px 8px;
@@ -346,22 +389,52 @@ body {
         font-size: 15px;
     }
 
-    .logo-img { width: 110px; }
-
-    .title {
-        font-size: 22px;
-        margin: 6px 0 20px;
+    .logo-img {
+        width: 110px;
     }
 
-    p, .intro-text, .weather-text, .weather-end {
+    .logo-box {
+        margin-top: 10px;
+        margin-bottom: 6px;
+        /* ← LOGO 下方距離更小 */
+
+    }
+
+    .logo-img {
+        width: 90px;
+        /* 比原本更合適 */
+    }
+
+    .title {
+        margin-top: -3px;
+        /* ← 標題往上靠 */
+        margin-bottom: 12px;
+        /* ← 跟 intro 卡片保持剛好距離 */
+        font-size: 22px;
+        /* 你原本手機字級 */
+    }
+
+    p,
+    .intro-text,
+    .weather-text,
+    .weather-end {
         line-height: 1.7;
     }
 
-    .intro-card { padding: 20px 18px; border-radius: 12px; }
+    .intro-card {
+        padding: 20px 18px;
+        border-radius: 12px;
+    }
 
-    .card { padding: 18px; border-radius: 12px; }
+    .card {
+        padding: 18px;
+        border-radius: 12px;
+    }
 
-    .checkbox-group label { font-size: 15px; white-space: nowrap; }
+    .checkbox-group label {
+        font-size: 15px;
+        white-space: nowrap;
+    }
 
     .checkbox-group {
         grid-template-columns: 1fr 1fr;
@@ -374,9 +447,17 @@ body {
         margin: 28px 0 34px;
     }
 
-    .weather-tag { font-size: 22px; }
-    .weather-text { font-size: 15.5px; }
-    .weather-end { font-size: 14.5px; }
+    .weather-tag {
+        font-size: 22px;
+    }
+
+    .weather-text {
+        font-size: 15.5px;
+    }
+
+    .weather-end {
+        font-size: 14.5px;
+    }
 
     .app-footer {
         font-size: 12px;
@@ -394,9 +475,10 @@ body {
     background: #ffffff;
     padding: 20px;
     border-radius: 16px;
-    box-shadow: 0 4px 14px rgba(150,170,190,0.12);
+    box-shadow: 0 4px 14px rgba(150, 170, 190, 0.12);
     border: 1px solid #e5e9f0;
-    overflow-x: auto; /* 手機可滑動 */
+    overflow-x: auto;
+    /* 手機可滑動 */
     margin: 0 auto;
     max-width: 900px;
 }
@@ -407,7 +489,8 @@ body {
     border-collapse: collapse;
     font-size: 15px;
     color: #4a4a4a;
-    min-width: 720px; /* 防止手機太擠 */
+    min-width: 720px;
+    /* 防止手機太擠 */
 }
 
 /* 表頭 */
@@ -420,7 +503,8 @@ body {
     white-space: nowrap;
     text-align: center;
     position: sticky;
-    top: 0;            /* 讓表頭固定 */
+    top: 0;
+    /* 讓表頭固定 */
     z-index: 2;
 }
 
@@ -461,7 +545,8 @@ body {
 
     .history-table {
         font-size: 13px;
-        min-width: 600px; /* 更適合手機滑動 */
+        min-width: 600px;
+        /* 更適合手機滑動 */
     }
 
     .history-table thead th {
