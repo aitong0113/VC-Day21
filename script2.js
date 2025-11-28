@@ -76,7 +76,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
         myData.forEach(row => {
             html += "<tr>";
-            row.forEach(col => html += `<td>${col}</td>`);
+            row.forEach((col, i) => {
+
+                // ⭐ 移除換行符號（資料可能含 \n）
+                col = col.replace(/\n/g, "").trim();
+
+                let cls = "";
+
+                // ⭐ score 欄位不換行（i=4）
+                if (i === 5) cls = "score-cell";
+
+                html += `<td class="${cls}">${col}</td>`;
+            });
             html += "</tr>";
         });
 
@@ -116,14 +127,14 @@ function renderMobileCards(rows, header) {
         header.forEach((h, i) => (o[h] = r[i]));
 
         card.innerHTML = `
-            <div class="row"><span class="label">時間</span><span>${o.timestamp}</span></div>
-            <div class="row"><span class="label">睡眠</span><span>${o.sleep}</span></div>
-            <div class="row"><span class="label">身體</span><span>${o.body}</span></div>
-            <div class="row"><span class="label">心情</span><span>${o.mood}</span></div>
-            <div class="row"><span class="label">分數</span><span>${o.score}</span></div>
-            <div class="row"><span class="label">天氣</span><span class="weather">${o.weather}</span></div>
-            <div class="row"><span class="label">建議</span><span>${o.suggestion}</span></div>
-        `;
+    <div class="row"><span class="label">時間</span><span class="value">${o.timestamp}</span></div>
+    <div class="row"><span class="label">睡眠</span><span class="value">${o.sleep}</span></div>
+    <div class="row"><span class="label">身體</span><span class="value">${o.body}</span></div>
+    <div class="row"><span class="label">心情</span><span class="value">${o.mood}</span></div>
+    <div class="row score"><span class="label">分數</span><span class="value">${o.score}</span></div>
+    <div class="row"><span class="label">天氣</span><span class="value">${o.weather}</span></div>
+    <div class="row"><span class="label">建議</span><span class="value">${o.suggestion}</span></div>
+`;
 
         cardList.appendChild(card);
     });

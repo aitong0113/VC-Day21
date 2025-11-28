@@ -65,6 +65,7 @@ body { --mobile-flag: false; }
     min-width: 900px; /* 避免擠壓 */
 }
 
+
 .history-table thead th {
     background: #f3f7fb;
     padding: 12px 14px;
@@ -97,9 +98,8 @@ body { --mobile-flag: false; }
     line-height: 1.5;
 }
 
-.history-table td.weather-cell {
-    font-size: 20px;
-}
+
+
 
 /* 桌面版隱藏手機卡片列表 */
 @media (min-width: 481px) {
@@ -154,8 +154,27 @@ body { --mobile-flag: false; }
     .history-card .row span:last-child {
         font-size: 15px;
         color: #4a4a4a;
-        font-weight: 600;
+        font-weight: 400;
         text-align: right;
         line-height: 1.5;
     }
+
+    
+}
+
+.history-card .row.score .value {
+    font-weight: 700; /* 只有 score 加粗 */
+    color: #7fa4c4;
+}
+
+
+.history-table td.weather-cell {
+    font-size: 20px;
+    white-space: nowrap !important;
+}
+
+.score-cell {
+    white-space: nowrap !important;
+    text-align: center;
+    font-weight: 600;
 }
