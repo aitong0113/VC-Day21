@@ -1,16 +1,16 @@
 //------------------------------------------------------
-// 🌤 今日心天氣 × 我的心天氣紀錄（整合版 script.js）
+// 🌤 今日心天氣 × 心天氣紀錄（最終強化強韌版 script.js）
 //------------------------------------------------------
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    // 偵測是否是首頁或紀錄頁
+    // 偵測頁面
     const isIndex = document.querySelector(".submit-btn") !== null;
     const isHistory = document.getElementById("historyOutput") !== null;
 
-    //---------------------------------------------
-    // 🆔 UUID + 匿名 userAlias
-    //---------------------------------------------
+    //------------------------------------------------------
+    // 🆔 UUID + 匿名 userAlias（個人識別碼）
+    //------------------------------------------------------
     function getUUID() {
         let id = localStorage.getItem("myUUID");
         if (!id) {
@@ -35,16 +35,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const userAlias = getUserAlias();
 
 
-    //---------------------------------------------
-    // 📌 Checkbox values
-    //---------------------------------------------
+    //------------------------------------------------------
+    // 📌 Checkbox 工具
+    //------------------------------------------------------
     function getCheckedValues(id) {
         return [...document.querySelectorAll(`#${id} input:checked`)].map(x => x.value);
     }
 
-    //---------------------------------------------
-    // 📌 AI-style 情緒語義分析
-    //---------------------------------------------
+    //------------------------------------------------------
+    // 📌 AI-style 語義分析
+    //------------------------------------------------------
     function analyzeTextEmotion(text) {
         if (!text) return { score: 0, inferred: [] };
 
@@ -78,18 +78,19 @@ document.addEventListener("DOMContentLoaded", () => {
         return { score, inferred: out };
     }
 
+
     //------------------------------------------------------
-    // 🌈 【首頁】啟動分析
+    // 🌈【首頁】分析 + 寫入 Google Sheet
     //------------------------------------------------------
     if (isIndex) {
 
+        const GAS_URL =
+            "https://script.google.com/macros/s/AKfycbxmIG16QhFUhSBfyKUh7PF3IjVXHOrR6RzBKjAMQ4UVsxD-P2-AaYbOl6-C7YG0jSiatg/exec";
+
         const btn = document.querySelector(".submit-btn");
         const resultBox = document.getElementById("result");
-        const loadingText = document.getElementById("loadingText");
         const weatherOutput = document.getElementById("weatherOutput");
-
-        // ⭐⭐⭐ 把這裡貼上你的 /exec ⭐⭐⭐
-        const GAS_URL = "https://script.google.com/macros/s/AKfycbxmIG16QhFUhSBfyKUh7PF3IjVXHOrR6RzBKjAMQ4UVsxD-P2-AaYbOl6-C7YG0jSiatg/exec";
+        const loadingText = document.getElementById("loadingText");
 
         btn.addEventListener("click", async () => {
 
@@ -100,11 +101,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            // Checkbox
             const body = getCheckedValues("body-group");
             const mood = getCheckedValues("mood-group");
 
-            // Free text
             const bodyFree = document.getElementById("body-free").value;
             const moodFree = document.getElementById("mood-free").value;
 
@@ -114,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const finalBody = [...new Set([...body, ...bodyAI.inferred])];
             const finalMood = [...new Set([...mood, ...moodAI.inferred])];
 
-            // ---------------- 分數 ----------------
+            //-------------------- 分數 --------------------
             let score = sleep * 1.5;
 
             finalBody.forEach(b => {
@@ -131,37 +130,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
             score += (bodyAI.score + moodAI.score) * 0.5;
 
-            // ---------------- 天氣 ----------------
+            //-------------------- 天氣結果 --------------------
             let weather, reason, suggestion;
 
             if (score >= 12) {
-                weather = "☀️ 晴朗";
-                reason = "你今天能量很足！";
-                suggestion = "適合創作、推進任務。";
+                weather = "☀️ 晴朗"; reason = "你今天能量很足！"; suggestion = "適合創作、推進任務。";
             } else if (score >= 6) {
-                weather = "🌤 微晴";
-                reason = "今天狀態大致穩定。";
-                suggestion = "做些輕量任務很適合。";
+                weather = "🌤 微晴"; reason = "狀態大致穩定。"; suggestion = "做些輕量任務很適合。";
             } else if (score >= 1) {
-                weather = "☁️ 陰";
-                reason = "有些疲倦。";
-                suggestion = "做簡單的事就好。";
+                weather = "☁️ 陰"; reason = "有些疲倦。"; suggestion = "做簡單的事就好。";
             } else if (score >= -5) {
-                weather = "🌧 小雨";
-                reason = "狀態需要被接住。";
-                suggestion = "好好休息一下。";
+                weather = "🌧 小雨"; reason = "需要被接住。"; suggestion = "好好休息一下。";
             } else {
-                weather = "⛈ 暴雨";
-                reason = "你承受很多。";
-                suggestion = "停一下，照顧自己。";
+                weather = "⛈ 暴雨"; reason = "你承受很多。"; suggestion = "停一下，照顧好自己。";
             }
 
-            // ---------------- 顯示 loading ----------------
+            //-------------------- UI Loading --------------------
             resultBox.style.display = "block";
-            weatherOutput.style.display = "none";
             loadingText.style.display = "block";
+            weatherOutput.style.display = "none";
 
-            // ---------------- 📌 回傳到 Google Sheet ----------------
+            //-------------------- ⭐ 寫入 Google Sheet --------------------
             const payload = {
                 userAlias,
                 sleep,
@@ -181,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 body: JSON.stringify(payload)
             });
 
-            // ---------------- 顯示結果 ----------------
+            //-------------------- 顯示最終結果 --------------------
             setTimeout(() => {
                 loadingText.style.display = "none";
                 weatherOutput.style.display = "block";
@@ -200,7 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 900);
         });
 
-        // ⭐ 開新分頁跳到紀錄頁
+        // ⭐ 跳到紀錄頁
         const goHistory = document.getElementById("goHistory");
         if (goHistory) {
             goHistory.addEventListener("click", () => {
@@ -209,18 +198,25 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+
     //------------------------------------------------------
-    // 📄 【紀錄頁】讀取 Google Sheet CSV
+    // 📄【紀錄頁】讀取 CSV（含 trim 修復版）
     //------------------------------------------------------
     if (isHistory) {
 
         const CSV_URL =
-            "https://docs.google.com/spreadsheets/d/e/2PACX-1vReMWrHOhNT6Ia8CHhYBO7wWN7tADRCL8vFKJTAIwPnWOEwuZioYWEoOBX_bFY7pizn5VRpkRxpy29b/pub?output=csv";
+            "https://docs.google.com/spreadsheets/d/e/2PACX-1vReMWrH0NTh6Ia8CHhYBO7wwn7tADRCLa8vFKJTAIwPnWOEwuZioYWeO0BX_bFY7pizn5VRpkRxpy29b/pub?output=csv";
 
         async function loadCSV() {
             const res = await fetch(CSV_URL);
             const text = await res.text();
-            return text.split("\n").map(r => r.split(","));
+
+            return text
+                .trim()
+                .split("\n")
+                .map(r =>
+                    r.split(",").map(c => (c || "").trim()) // ★重點：清洗整列字元
+                );
         }
 
         async function renderHistory() {
@@ -231,18 +227,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const output = document.getElementById("historyOutput");
 
-            const data = dataRows.filter(r => r[1] === userAlias);
+            // ★重點：找 userAlias 用 trim() 防止 CSV 隱藏字元
+            const myData = dataRows.filter(
+                r => (r[1] || "").trim() === userAlias.trim()
+            );
 
-            if (data.length === 0) {
+            if (myData.length === 0) {
                 output.innerHTML = "<p class='placeholder'>目前沒有找到你的紀錄。</p>";
                 return;
             }
 
+            // ---- 渲染表格 ----
             let html = "<table class='history-table'><tr>";
             header.forEach(h => html += `<th>${h}</th>`);
             html += "</tr>";
 
-            data.forEach(row => {
+            myData.forEach(row => {
                 html += "<tr>";
                 row.forEach(col => html += `<td>${col}</td>`);
                 html += "</tr>";
@@ -255,4 +255,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
         renderHistory();
     }
+
 });
