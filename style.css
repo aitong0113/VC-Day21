@@ -265,81 +265,170 @@ body {
     font-size: 13px;
 }
 
-/* -------------------------------------------
-   📱 全新手機版 RWD（乾淨、完整、無重複）
-------------------------------------------- */
-@media (max-width: 480px) {
+/* ============================================
+   📱 今日心天氣 · 全新手機優化版（Mobile First）
+   — 柔霧美學、心理產品、舒適易讀
+================================================ */
+@media (max-width: 520px) {
 
+    /* 整體排版：更窄、不壓迫、閱讀舒服 */
     body {
-        padding: 16px;
-        font-size: 15px;
-        line-height: 1.55;
+        padding: 20px 14px;
+        font-size: 15.2px;
+        line-height: 1.65;
+        background: var(--bg-blue);
     }
 
-    .logo-img { width: 120px; }
+    .container {
+        padding: 0;
+    }
 
+    /* Logo */
+    .logo-img {
+        width: 120px;
+        margin-bottom: 10px;
+    }
+
+    /* 頁面主標題 */
     .title {
         font-size: 22px;
-        margin: 8px 0 14px;
+        margin: 6px 0 20px;
     }
 
+    /* ✦ 導入更柔的段落配置 */
+    p, .intro-text, .weather-text, .weather-end {
+        line-height: 1.68;
+        max-width: 34em;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Intro 卡片：更小、更呼吸感 */
     .intro-card {
-        padding: 18px 16px;
-        margin: 0 0 20px;
+        padding: 20px 16px;
+        margin: 0 0 26px;
         border-radius: 12px;
     }
 
-    .intro-title { font-size: 16px; }
-    .intro-text  { font-size: 14px; }
-    .intro-sign  { font-size: 13px; }
+    .intro-title {
+        font-size: 17px;
+        margin-bottom: 6px;
+        line-height: 1.4;
+    }
 
+    /* 區域標題（⭐ ✨ 🕒） */
     .section-title {
-        font-size: 16px;
-        margin: 22px 0 10px;
+        font-size: 17px;
+        margin: 26px 0 14px;
+        line-height: 1.4;
+        display: flex;
+        align-items: center;
+        gap: 6px;
     }
 
+    /* 卡片：窄一點，內容不被壓縮 */
     .card {
-        padding: 16px;
+        padding: 16px 16px;
         border-radius: 12px;
-        margin-bottom: 18px;
+        margin-bottom: 22px;
     }
 
-    .label { font-size: 15px; }
-    .label small { font-size: 13px; }
+    /* Label 主題文字 */
+    .label {
+        font-size: 15.5px;
+        margin-bottom: 10px;
+        line-height: 1.45;
+    }
 
-    .input-select, .input-text {
-        font-size: 14px;
-        padding: 10px 12px;
+    .label small {
+        font-size: 13.5px;
+        line-height: 1.45;
+    }
+
+    /* 表單 + 下拉框 */
+    .input-select,
+    .input-text {
+        padding: 12px;
+        font-size: 15px;
         border-radius: 10px;
     }
 
+    /* Checkbox：兩欄但不會擠爆 */
     .checkbox-group {
+        display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 10px 10px;
+        gap: 12px 14px;
     }
 
-    .checkbox-group label { font-size: 14.5px; }
-    .checkbox-group input { width: 18px; height: 18px; }
+    .checkbox-group label {
+        font-size: 15px;
+        line-height: 1.45;
+        white-space: nowrap;    /* 避免掉 1～2 字到下一行 */
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
 
+    /* Checkbox 勾勾 iPhone 對齊修正 */
+    .checkbox-group input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        border-width: 2px;
+        border-radius: 5px;
+    }
+
+    .checkbox-group input[type="checkbox"]:checked::after {
+        content: "✔";
+        font-size: 15px;
+        position: absolute;
+        top: 0px;
+        left: 4px;
+    }
+
+    /* 按鈕 */
     .submit-btn {
-        font-size: 16px;
-        padding: 14px;
+        font-size: 16.5px;
+        padding: 15px;
         border-radius: 12px;
+        margin: 10px 0 20px;
     }
 
+    /* 結果卡片 */
     .weather-card {
-        padding: 24px 18px;
-        border-radius: 16px;
-        margin: 20px 0 30px;
+        padding: 26px 20px;
+        border-radius: 18px;
+        margin: 26px 0 36px;
     }
 
-    .weather-tag { font-size: 20px; }
-    .weather-text { font-size: 15px; }
-    .weather-advice { font-size: 14.5px; }
-    .weather-end { font-size: 14px; }
+    .weather-tag {
+        font-size: 22px;
+        margin-bottom: 10px;
+        line-height: 1.4;
+    }
 
+    .weather-text {
+        font-size: 15.5px;
+        margin-bottom: 18px;
+    }
+
+    .weather-stats-box {
+        padding: 16px 14px;
+        border-radius: 14px;
+    }
+
+    .weather-advice {
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    .weather-end {
+        font-size: 14.5px;
+        margin-top: 22px;
+    }
+
+    /* Footer */
     .app-footer {
-        font-size: 12px;
-        padding: 24px 0;
+        font-size: 12.5px;
+        padding: 26px 0 40px;
     }
 }
