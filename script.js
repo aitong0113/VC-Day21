@@ -122,21 +122,21 @@ function generateWeather() {
         weatherOutput.innerHTML = `
     <div class="weather-card">
 
-      <div class="weather-tag">${weather}</div>
+        <div class="weather-tag">${weather}</div>
 
-      <div class="weather-main">
-        <p class="weather-text">${reason}</p>
-      </div>
+        <p class="weather-subtext">${reason}</p>
 
-      <div class="weather-stats-box">
-        <p class="weather-subtitle">⚡ 今日的建議節奏：</p>
-        <p class="weather-advice">${suggestion}</p>
-      </div>
+        <div class="weather-stats-box">
+            <p class="weather-subtitle main-accent-title">⚡ 今日的建議節奏：</p>
+            <ul class="weather-advice">
+                <li>${suggestion}</li>
+            </ul>
+        </div>
 
-      <p class="weather-end">我陪著你，你不用一個人面對今天的天氣。</p>
+        <p class="weather-end">我陪著你，你不用一個人面對今天的天氣。</p>
 
     </div>
-  `;
+`;
     }, 1200);
 }
 

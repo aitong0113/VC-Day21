@@ -194,6 +194,23 @@ body {
 .result { min-height: 120px; margin-top: 24px; }
 .placeholder { color: #a1aab7; font-size: 15px; }
 
+/* 主色調專用小標題（天氣結果區塊用） */
+.main-accent-title {
+    color: var(--blue-main);      /* 你的藍色主色調 */
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Emoji 微調，與文字完美對齊 */
+.main-accent-title::before {
+    content: "";
+}
+
 /* Weather Card */
 .weather-card {
     background: #ffffff;
@@ -208,6 +225,37 @@ body {
 .weather-tag { font-size: 28px; margin-bottom: 16px; color: #6a87b6; }
 .weather-text { font-size: 17px; line-height: 1.8; color: #5f6c7b; }
 .weather-advice { font-size: 16px; line-height: 1.7; }
+
+
+.weather-stats-box {
+    background: #f7faff;
+    padding: 18px 20px;
+    border-radius: 16px;
+    border: 1.5px solid #e3e8f0;
+    margin: 24px auto;
+    text-align: left;
+    max-width: 520px;
+}
+
+/* 副標題（天氣標題下那一句） */
+.weather-subtext {
+    font-size: 18px;
+    color: var(--blue-main);   /* 主色調藍 */
+    margin-top: 12px;
+    margin-bottom: 28px;
+    text-align: center;
+    opacity: 0.85;             /* 柔和一點 */
+    letter-spacing: 0.4px;
+}
+
+/* 最底部安定那一句 */
+.weather-end {
+    color: var(--blue-main);   /* 主色調藍 */
+    font-size: 16px;
+    margin-top: 24px;
+    opacity: 0.9;
+    letter-spacing: 0.5px;
+}
 
 /* Footer */
 .app-footer {
