@@ -267,80 +267,150 @@ body {
 }
 
 /* -------------------------------------------
-   📱 全新手機版 RWD（乾淨、完整、無重複）
+   📱 全新手機版 RWD（最終優化版）
 ------------------------------------------- */
 @media (max-width: 480px) {
 
     body {
-        padding: 16px;
+        padding: 18px;
         font-size: 15px;
         line-height: 1.55;
     }
 
-    .logo-img { width: 120px; }
+    .logo-img { width: 110px; }
 
     .title {
         font-size: 22px;
-        margin: 8px 0 14px;
+        margin: 10px 0 16px;
+        letter-spacing: 1px;
     }
 
+    /* 📌 Intro 區塊：手機最佳排版 */
     .intro-card {
-        padding: 18px 16px;
-        margin: 0 0 20px;
+        padding: 20px 18px;
+        margin: 0 0 24px;
         border-radius: 12px;
+        text-align: left;               /* 左對齊才不會中間只剩三個字 */
     }
 
-    .intro-title { font-size: 16px; }
-    .intro-text  { font-size: 14px; }
-    .intro-sign  { font-size: 13px; }
+    .intro-title { 
+        font-size: 17px;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 14px;
+    }
+
+    .intro-text  { 
+        font-size: 14px;
+        line-height: 1.62;
+        margin-bottom: 14px;
+        color: #6d7b8c;
+        text-align: left;
+        letter-spacing: 0.4px;
+    }
+
+    .intro-sign  { 
+        font-size: 13px;
+        margin-top: 12px;
+        text-align: right;
+        opacity: 0.8;
+    }
 
     .section-title {
         font-size: 16px;
-        margin: 22px 0 10px;
+        margin: 26px 0 12px;
     }
 
     .card {
-        padding: 16px;
+        padding: 18px;
         border-radius: 12px;
-        margin-bottom: 18px;
+        margin-bottom: 20px;
     }
 
     .label { font-size: 15px; }
     .label small { font-size: 13px; }
 
-    .input-select, .input-text {
+    .input-select, 
+    .input-text {
         font-size: 14px;
-        padding: 10px 12px;
+        padding: 11px 12px;
         border-radius: 10px;
     }
 
+    /* 📌 Checkbox：iPhone 最終修正版（不歪） */
     .checkbox-group {
         grid-template-columns: 1fr 1fr;
-        gap: 10px 10px;
+        gap: 12px 12px;
+        margin-top: 14px;
     }
 
-    .checkbox-group label { font-size: 14.5px; }
-    .checkbox-group input { width: 18px; height: 18px; }
+    .checkbox-group label {
+        font-size: 14.5px;
+        line-height: 1.35;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* 🔥 終於不歪的 checkbox */
+    .checkbox-group input[type="checkbox"] {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #AFC7D9;
+        border-radius: 6px;
+        background: #fff;
+        display: grid;
+        place-content: center;
+        cursor: pointer;
+        margin-top: 1px; /* 與文字自然對齊 */
+    }
+
+    .checkbox-group input[type="checkbox"]::before {
+        content: "";
+        width: 12px;
+        height: 12px;
+        transform: scale(0);
+        transition: 0.18s ease;
+        background-color: var(--blue-main);
+        border-radius: 3px;
+    }
+
+    .checkbox-group input[type="checkbox"]:checked::before {
+        transform: scale(1);
+    }
 
     .submit-btn {
         font-size: 16px;
         padding: 14px;
         border-radius: 12px;
+        margin-top: 12px;
     }
 
+    /* 📌 天氣結果卡片 */
     .weather-card {
-        padding: 24px 18px;
-        border-radius: 16px;
-        margin: 20px 0 30px;
+        padding: 26px 18px;
+        border-radius: 18px;
+        margin: 28px 0 34px;
     }
 
-    .weather-tag { font-size: 20px; }
-    .weather-text { font-size: 15px; }
+    .weather-tag { font-size: 22px; margin-bottom: 12px; }
+    .weather-text { font-size: 15px; line-height: 1.65; }
     .weather-advice { font-size: 14.5px; }
-    .weather-end { font-size: 14px; }
+
+    .weather-subtext { 
+        font-size: 15px;
+        margin-bottom: 24px;
+    }
+
+    .weather-end { 
+        font-size: 14.5px;
+        margin-top: 20px;
+    }
 
     .app-footer {
         font-size: 12px;
-        padding: 24px 0;
+        padding: 26px 0;
     }
 }
