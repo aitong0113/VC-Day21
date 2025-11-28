@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/aitong0113/VC-Day21/main/images/banner.png"
+  <img src="https://raw.githubusercontent.com/aitong0113/VC-Day21/main/banner.png"
        alt="今日心天氣 Banner"
        width="90%"
        style="border-radius: 12px; box-shadow: 0 4px 18px rgba(0,0,0,0.15);" />
