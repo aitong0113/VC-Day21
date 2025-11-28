@@ -1,186 +1,197 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
+
 <head>
-  <!-- PWA -->
-  <link rel="manifest" href="manifest.json">
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
 
-  <!-- Icons -->
-  <link rel="icon" type="image/png" href="HeartWeather.png">
-  <link rel="apple-touch-icon" href="HeartWeather.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="HeartWeather.png">
+    <!-- Icons -->
+    <link rel="icon" type="image/png" href="HeartWeather.png">
+    <link rel="apple-touch-icon" href="HeartWeather.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="HeartWeather.png">
 
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>今日心天氣</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>今日心天氣</title>
 
-  <!-- 外部 CSS -->
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap">
+    <!-- 外部 CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap">
 </head>
 
 <body>
 
-  <!-- LOGO -->
-  <div class="logo-box">
-    <img src="HeartWeather.png" alt="心天氣 Logo" class="logo-img">
-  </div>
-
-  <div class="container">
-
-    <h1 class="title">《今日心天氣》</h1>
-
-
-
-    <div class="intro-card">
-  <h2 class="intro-title">為你播報內心的天氣能量</h2>
-
-  <p class="intro-text">
-    有時候，我們感覺哪裡不太對，但說不上來是心累了，還是身體悄悄在抗議。<br>
-    《今日心天氣》會透過你的睡眠、身體感受與心情線索，<br>
-    把「此刻的內在狀態」整理成一種好理解的天氣。
-  </p>
-
-  <p class="intro-text">
-    當你看懂自己的心天氣，也就更容易調整今天的步伐——<br>
-    今天適合動起來？維持平穩？還是給自己一點溫柔的休息？<br>
-    讓你能找到最貼合自己的節奏。<br>
-    <p class="intro-sign">
-      — Abbie，寫給今天的你
-    </p>
-  </p>
-</div>
-
-
-
-    <!-- ⭐ 睡眠 -->
-    <h3 class="section-title">⭐ 昨晚睡得好嗎？</h3>
-    <div class="card">
-      <label class="label">
-        為我的睡眠分數打分數（0–10 分）
-        <br><small>你的身體也有天氣，我想知道今天是晴朗或需要休息的雲。</small>
-      </label>
-      <select id="sleep" class="input-select">
-        <option value="">請選擇</option>
-        <option>0</option><option>1</option><option>2</option><option>3</option><option>4</option>
-        <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
-      </select>
+    <!-- LOGO -->
+    <div class="logo-box">
+        <img src="HeartWeather.png" alt="心天氣 Logo" class="logo-img">
     </div>
 
-    <!-- 身體狀態 -->
-    <div class="card">
-      <label class="label">
-        你的身體感覺起來是…
-        <br><small>沒關係，我陪你一起看看現在的雲層。</small>
-      </label>
+    <div class="container">
 
-      <div class="checkbox-group">
-        <label><input type="checkbox" value="無症狀">無症狀</label>
-        <label><input type="checkbox" value="輕微疲倦">輕微疲倦</label>
-        <label><input type="checkbox" value="肩頸緊">肩頸緊</label>
-        <label><input type="checkbox" value="想睡">想睡</label>
-        <label><input type="checkbox" value="小頭暈">小頭暈</label>
-        <label><input type="checkbox" value="肚子在滾">肚子在滾</label>
-        <label><input type="checkbox" value="胸悶">胸悶</label>
-        <label><input type="checkbox" value="明顯疲累">明顯疲累</label>
-        <label><input type="checkbox" value="焦慮">焦慮</label>
-        <label><input type="checkbox" value="想哭">想哭</label>
-        <label><input type="checkbox" value="反覆頭暈">反覆頭暈</label>
-        <label><input type="checkbox" value="強烈焦慮">強烈焦慮</label>
-      </div>
+        <h1 class="title">《今日心天氣》</h1>
 
-      <input type="text" class="input-text" placeholder="想補充的身體感受…也可以讓我知道">
+
+
+        <div class="intro-card">
+            <h2 class="intro-title">為你播報內心的天氣能量</h2>
+
+            <p class="intro-text">
+                有時候，我們感覺哪裡不太對，但說不上來是心累了，還是身體悄悄在抗議。<br>
+                《今日心天氣》會透過你的睡眠、身體感受與心情線索，<br>
+                把「此刻的內在狀態」整理成一種好理解的天氣。
+            </p>
+
+            <p class="intro-text">
+                當你看懂自己的心天氣，也就更容易調整今天的步伐——<br>
+                今天適合動起來？維持平穩？還是給自己一點溫柔的休息？<br>
+                讓你能找到最貼合自己的節奏。<br>
+            <p class="intro-sign">
+                — Abbie，寫給今天的你
+            </p>
+            </p>
+        </div>
+
+
+
+        <!-- ⭐ 睡眠 -->
+        <h3 class="section-title">⭐ 昨晚睡得好嗎？</h3>
+        <div class="card">
+            <label class="label">
+                為我的睡眠分數打分數（0–10 分）
+                <br><small>你的身體也有天氣，我想知道今天是晴朗或需要休息的雲。</small>
+            </label>
+            <select id="sleep" class="input-select">
+                <option value="">請選擇</option>
+                <option>0</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+            </select>
+        </div>
+
+        <!-- 身體狀態 -->
+        <div class="card">
+            <label class="label">
+                你的身體感覺起來是…
+                <br><small>沒關係，我陪你一起看看現在的雲層。</small>
+            </label>
+
+            <div class="checkbox-group">
+                <label><input type="checkbox" value="無症狀">無症狀</label>
+                <label><input type="checkbox" value="輕微疲倦">輕微疲倦</label>
+                <label><input type="checkbox" value="肩頸緊">肩頸緊</label>
+                <label><input type="checkbox" value="想睡">想睡</label>
+                <label><input type="checkbox" value="小頭暈">小頭暈</label>
+                <label><input type="checkbox" value="肚子在滾">肚子在滾</label>
+                <label><input type="checkbox" value="胸悶">胸悶</label>
+                <label><input type="checkbox" value="明顯疲累">明顯疲累</label>
+                <label><input type="checkbox" value="焦慮">焦慮</label>
+                <label><input type="checkbox" value="想哭">想哭</label>
+                <label><input type="checkbox" value="反覆頭暈">反覆頭暈</label>
+                <label><input type="checkbox" value="強烈焦慮">強烈焦慮</label>
+            </div>
+
+            <input type="text" class="input-text" placeholder="想補充的身體感受…也可以讓我知道">
+        </div>
+
+        <!-- 心情 -->
+        <h3 class="section-title">💙 你的心情天氣</h3>
+        <div class="card">
+            <label class="label">
+                你的心，今天像什麼天氣呢？
+                <br><small>不需要想太多，用感覺回答就好。</small>
+            </label>
+
+            <div class="checkbox-group">
+                <label><input type="checkbox" value="穩定">穩定</label>
+                <label><input type="checkbox" value="平靜">平靜</label>
+                <label><input type="checkbox" value="普通">普通</label>
+                <label><input type="checkbox" value="小煩悶">小煩悶</label>
+                <label><input type="checkbox" value="小低落">小低落</label>
+                <label><input type="checkbox" value="明顯低落">明顯低落</label>
+                <label><input type="checkbox" value="胸口悶">胸口悶</label>
+                <label><input type="checkbox" value="焦慮">焦慮</label>
+                <label><input type="checkbox" value="情緒不穩">情緒不穩</label>
+                <label><input type="checkbox" value="想哭">想哭</label>
+            </div>
+
+            <input type="text" class="input-text" placeholder="此刻心裡的聲音…想說什麼都可以">
+        </div>
+
+        <!-- 前進方向 -->
+        <h3 class="section-title">✨ 今天想前進的方向</h3>
+        <div class="card">
+            <label class="label">
+                今天想前進的方向（1–3 項）
+                <br><small>一步一步，不急，我陪你一起走。</small>
+            </label>
+
+            <div class="checkbox-group">
+                <label><input type="checkbox" value="工作/學業">工作 / 學業</label>
+                <label><input type="checkbox" value="個人專案/創作">個人專案 / 創作</label>
+                <label><input type="checkbox" value="學習新技能">學習新技能</label>
+                <label><input type="checkbox" value="重要文件處理">重要文件處理</label>
+                <label><input type="checkbox" value="家務整理">家務整理</label>
+                <label><input type="checkbox" value="財務行政">財務行政</label>
+                <label><input type="checkbox" value="規劃ToDo">規劃 To-do</label>
+                <label><input type="checkbox" value="陪伴家人">陪伴家人</label>
+                <label><input type="checkbox" value="身心照顧">身心照顧</label>
+                <label><input type="checkbox" value="散步伸展">散步 / 伸展</label>
+                <label><input type="checkbox" value="喝杯喜歡的飲品">喝喜歡的飲品</label>
+                <label><input type="checkbox" value="心情書寫">心情書寫</label>
+                <label><input type="checkbox" value="今天想休息">今天想休息</label>
+            </div>
+
+            <input type="text" class="input-text" placeholder="還有什麼是你想慢慢靠近的呢？">
+        </div>
+
+        <!-- 時間 -->
+        <h3 class="section-title">🕒 今天的可用時間</h3>
+        <div class="card">
+            <label class="label">
+                今天的可用時間是…
+                <br><small>不論長短，我會調整到你舒服的節奏。</small>
+            </label>
+
+            <select id="time" class="input-select">
+                <option value="">請選擇</option>
+                <option>只有一點點（30–60 分）</option>
+                <option>可以做一下（1–2 小時）</option>
+                <option>可安排一段時間（2–4 小時）</option>
+                <option>有半天左右</option>
+                <option>今天比較彈性</option>
+            </select>
+
+            <input type="text" class="input-text" placeholder="或你想自己決定時間…也可以寫給我">
+        </div>
+
+        <!-- 按鈕 -->
+        <button class="submit-btn">🌤 看看我今天的心天氣</button>
+
+        <!-- 結果展示 -->
+        <div class="result card" id="result" style="display:none;">
+            <p class="placeholder" id="loadingText">等一下，我正在讀取你的心天氣…</p>
+        </div>
+
     </div>
 
-    <!-- 心情 -->
-    <h3 class="section-title">💙 你的心情天氣</h3>
-    <div class="card">
-      <label class="label">
-        你的心，今天像什麼天氣呢？
-        <br><small>不需要想太多，用感覺回答就好。</small>
-      </label>
-
-      <div class="checkbox-group">
-        <label><input type="checkbox" value="穩定">穩定</label>
-        <label><input type="checkbox" value="平靜">平靜</label>
-        <label><input type="checkbox" value="普通">普通</label>
-        <label><input type="checkbox" value="小煩悶">小煩悶</label>
-        <label><input type="checkbox" value="小低落">小低落</label>
-        <label><input type="checkbox" value="明顯低落">明顯低落</label>
-        <label><input type="checkbox" value="胸口悶">胸口悶</label>
-        <label><input type="checkbox" value="焦慮">焦慮</label>
-        <label><input type="checkbox" value="情緒不穩">情緒不穩</label>
-        <label><input type="checkbox" value="想哭">想哭</label>
-      </div>
-
-      <input type="text" class="input-text" placeholder="此刻心裡的聲音…想說什麼都可以">
-    </div>
-
-    <!-- 前進方向 -->
-    <h3 class="section-title">✨ 今天想前進的方向</h3>
-    <div class="card">
-      <label class="label">
-        今天想前進的方向（1–3 項）
-        <br><small>一步一步，不急，我陪你一起走。</small>
-      </label>
-
-      <div class="checkbox-group">
-        <label><input type="checkbox" value="工作/學業">工作 / 學業</label>
-        <label><input type="checkbox" value="個人專案/創作">個人專案 / 創作</label>
-        <label><input type="checkbox" value="學習新技能">學習新技能</label>
-        <label><input type="checkbox" value="重要文件處理">重要文件處理</label>
-        <label><input type="checkbox" value="家務整理">家務整理</label>
-        <label><input type="checkbox" value="財務行政">財務行政</label>
-        <label><input type="checkbox" value="規劃ToDo">規劃 To-do</label>
-        <label><input type="checkbox" value="陪伴家人">陪伴家人</label>
-        <label><input type="checkbox" value="身心照顧">身心照顧</label>
-        <label><input type="checkbox" value="散步伸展">散步 / 伸展</label>
-        <label><input type="checkbox" value="喝杯喜歡的飲品">喝喜歡的飲品</label>
-        <label><input type="checkbox" value="心情書寫">心情書寫</label>
-        <label><input type="checkbox" value="今天想休息">今天想休息</label>
-      </div>
-
-      <input type="text" class="input-text" placeholder="還有什麼是你想慢慢靠近的呢？">
-    </div>
-
-    <!-- 時間 -->
-    <h3 class="section-title">🕒 今天的可用時間</h3>
-    <div class="card">
-      <label class="label">
-        今天的可用時間是…
-        <br><small>不論長短，我會調整到你舒服的節奏。</small>
-      </label>
-
-      <select id="time" class="input-select">
-        <option value="">請選擇</option>
-        <option>只有一點點（30–60 分）</option>
-        <option>可以做一下（1–2 小時）</option>
-        <option>可安排一段時間（2–4 小時）</option>
-        <option>有半天左右</option>
-        <option>今天比較彈性</option>
-      </select>
-
-      <input type="text" class="input-text" placeholder="或你想自己決定時間…也可以寫給我">
-    </div>
-
-    <!-- 按鈕 -->
-    <button class="submit-btn">🌤 看看我今天的心天氣</button>
-
-    <!-- 結果展示 -->
-    <div class="result" id="result">
-      <p class="placeholder">等一下，我正在讀取你的心天氣…</p>
-    </div>
-
-  </div>
-
-  <!-- 外部 JS -->
-  <script src="script.js"></script>
+    <!-- 外部 JS -->
+    <script src="script.js"></script>
 
 </body>
 
 
 <footer class="app-footer">
-  <p class="footer-line">Designed & Developed by <strong>Abbie Lin</strong> © 2024</p>
-  <p class="footer-sub">今日心天氣 Today’s Inner Weather · All rights reserved.</p>
+    <p class="footer-line">Designed & Developed by <strong>Abbie Lin</strong> © 2024</p>
+    <p class="footer-sub">今日心天氣 Today’s Inner Weather · All rights reserved.</p>
 </footer>
 
 </html>

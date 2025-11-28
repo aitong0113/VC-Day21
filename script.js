@@ -1,28 +1,56 @@
-document.querySelector(".submit-btn").addEventListener("click", generateWeather);
+//-----------------------------------------
+// 🌤 今日心天氣 · 主功能
+//-----------------------------------------
 
+// 主要 DOM
+const btn = document.querySelector(".submit-btn");
+const resultBox = document.getElementById("result");
+const weatherOutput = document.getElementById("weatherOutput");
+const loadingText = document.getElementById("loadingText");
+
+// 監聽按鈕
+btn.addEventListener("click", generateWeather);
+
+
+//-----------------------------------------
+// 🎛 Step 1：主要計算流程
+//-----------------------------------------
 function generateWeather() {
+  // ➤ 讀取「睡眠分數」
   const sleep = Number(document.getElementById("sleep").value);
 
-  const bodyChecks = [
-    ...document.querySelectorAll(
-      '.card:nth-of-type(2) input[type="checkbox"]:checked'
-    ),
-  ].map(x => x.value);
+  // ➤ 讀取「身體狀態」勾選
+  const bodyChecks = [...document.querySelectorAll(
+    '.card:nth-of-type(2) input[type="checkbox"]:checked'
+  )].map(x => x.value);
 
-  const moodChecks = [
-    ...document.querySelectorAll(
-      '.card:nth-of-type(3) input[type="checkbox"]:checked'
-    ),
-  ].map(x => x.value);
+  // ➤ 讀取「心情天氣」勾選
+  const moodChecks = [...document.querySelectorAll(
+    '.card:nth-of-type(3) input[type="checkbox"]:checked'
+  )].map(x => x.value);
 
-  const resultCard = document.getElementById("result");
 
-  // 沒填睡眠分數 → 阻擋
+  //-----------------------------------------
+  // 🛑 Step 2：阻擋沒填睡眠分數
+  //-----------------------------------------
   if (!sleep && sleep !== 0) {
-    resultCard.innerHTML = `
-      <p class="placeholder">🌧 填一下睡眠分數，我才能看懂心天氣唷。</p>`;
+    resultBox.style.display = "block";
+    loadingText.innerText = "🌧 填一下睡眠分數，我才能看懂心天氣唷。";
+    weatherOutput.style.display = "none";
     return;
   }
+
+  //-----------------------------------------
+  // ⏳ Step 3：顯示 loading 動畫
+  //-----------------------------------------
+  resultBox.style.display = "block";      // 顯示外框
+  loadingText.style.display = "block";    // 顯示讀取中文字
+  weatherOutput.style.display = "none";   // 隱藏結果
+
+
+  //-----------------------------------------
+  // 🧠 Step 4：開始計算心天氣
+  //-----------------------------------------
 
   let weather = "";
   let reason = "";
@@ -71,28 +99,37 @@ function generateWeather() {
     suggestion = "請優先休息，喝水、補充食物、躺下。";
   }
 
-  // 🌥 默默的雲
+  // 🌥 默默的雲（預設）
   else {
     weather = "🌥 淡淡的雲";
     reason = "有些說不出的感覺，但沒關係。";
     suggestion = "做一件最簡單、最不費力的事，就是今天的任務。";
   }
 
-  // 顯示結果
-  resultCard.innerHTML = `
-    <div class="weather-preview">
-      <h2 class="weather-title">${weather}</h2>
-      <p class="weather-reason">${reason}</p>
 
-      <div class="weather-box">
-        <p class="weather-subtitle">🌦 今日的建議節奏：</p>
-        <ul class="weather-list">
-          <li>${suggestion}</li>
-        </ul>
+  //-----------------------------------------
+  // 🕒 Step 5：延遲 1.2 秒 → 顯示結果
+  //-----------------------------------------
+  setTimeout(() => {
+    loadingText.style.display = "none";   // 隱藏讀取中文字
+    weatherOutput.style.display = "block";
+    weatherOutput.classList.add("fade-in");
+
+    // 動態填入結果
+    weatherOutput.innerHTML = `
+      <div class="weather-card">
+        <div class="weather-tag">${weather}</div>
+
+        <div class="weather-main">
+          <p class="weather-text">${reason}</p>
+        </div>
+
+        <div class="weather-stats-box">
+          <p class="weather-advice">${suggestion}</p>
+        </div>
+
+        <p class="weather-end">我陪著你，你不用一個人面對今天的天氣。</p>
       </div>
-
-      <p class="weather-end">我陪著你，你不用一個人面對今天的天氣。</p>
-    </div>
-  `;
+    `;
+  }, 1200);
 }
-
