@@ -358,7 +358,6 @@ body {
         -webkit-appearance: none;
         width: 20px;
         height: 20px;
-        border: 2px solid #AFC7D9;
         border-radius: 6px;
         background: #fff;
         display: grid;
@@ -373,7 +372,6 @@ body {
         height: 12px;
         transform: scale(0);
         transition: 0.18s ease;
-        background-color: var(--blue-main);
         border-radius: 3px;
     }
 
