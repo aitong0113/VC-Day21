@@ -75,17 +75,18 @@ body {
 }
 
 .intro-text {
-    font-size: 14px;
-    color: #a2afbe;
-    line-height: 1.65;
-    margin-bottom: 6px;
+    font-size: 15px;
+    line-height: 1.75;
+    margin-bottom: 16px;
+    color: #6a7f98;
+    text-align: left;
 }
 
 .intro-sign {
-    text-align: right;
-    margin-top: 12px;
+    margin-top: 10px;
+    color: #9bb3c8;
     font-size: 14px;
-    color: #9aa5b6;
+    text-align: right;
 }
 
 /* Intro 動畫 */
@@ -265,170 +266,151 @@ body {
     font-size: 13px;
 }
 
-/* ============================================
-   📱 今日心天氣 · 全新手機優化版（Mobile First）
-   — 柔霧美學、心理產品、舒適易讀
-================================================ */
-@media (max-width: 520px) {
+/* -------------------------------------------
+   📱 全新手機版 RWD（最終優化版）
+------------------------------------------- */
+@media (max-width: 480px) {
 
-    /* 整體排版：更窄、不壓迫、閱讀舒服 */
     body {
-        padding: 20px 14px;
-        font-size: 15.2px;
-        line-height: 1.65;
-        background: var(--bg-blue);
+        padding: 18px;
+        font-size: 15px;
+        line-height: 1.55;
     }
 
-    .container {
-        padding: 0;
-    }
+    .logo-img { width: 110px; }
 
-    /* Logo */
-    .logo-img {
-        width: 120px;
-        margin-bottom: 10px;
-    }
-
-    /* 頁面主標題 */
     .title {
         font-size: 22px;
-        margin: 6px 0 20px;
+        margin: 10px 0 16px;
+        letter-spacing: 1px;
     }
 
-    /* ✦ 導入更柔的段落配置 */
-    p, .intro-text, .weather-text, .weather-end {
-        line-height: 1.68;
-        max-width: 34em;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    /* Intro 卡片：更小、更呼吸感 */
+    /* 📌 Intro 區塊：手機最佳排版 */
     .intro-card {
-        padding: 20px 16px;
-        margin: 0 0 26px;
+        padding: 20px 18px;
+        margin: 0 0 24px;
         border-radius: 12px;
+        text-align: left;               /* 左對齊才不會中間只剩三個字 */
     }
 
-    .intro-title {
+    .intro-title { 
         font-size: 17px;
-        margin-bottom: 6px;
-        line-height: 1.4;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 14px;
     }
 
-    /* 區域標題（⭐ ✨ 🕒） */
+    .intro-text  { 
+        font-size: 14px;
+        line-height: 1.62;
+        margin-bottom: 14px;
+        color: #6d7b8c;
+        text-align: left;
+        letter-spacing: 0.4px;
+    }
+
+    .intro-sign  { 
+        font-size: 13px;
+        margin-top: 12px;
+        text-align: right;
+        opacity: 0.8;
+    }
+
     .section-title {
-        font-size: 17px;
-        margin: 26px 0 14px;
-        line-height: 1.4;
-        display: flex;
-        align-items: center;
-        gap: 6px;
+        font-size: 16px;
+        margin: 26px 0 12px;
     }
 
-    /* 卡片：窄一點，內容不被壓縮 */
     .card {
-        padding: 16px 16px;
+        padding: 18px;
         border-radius: 12px;
-        margin-bottom: 22px;
+        margin-bottom: 20px;
     }
 
-    /* Label 主題文字 */
-    .label {
-        font-size: 15.5px;
-        margin-bottom: 10px;
-        line-height: 1.45;
-    }
+    .label { font-size: 15px; }
+    .label small { font-size: 13px; }
 
-    .label small {
-        font-size: 13.5px;
-        line-height: 1.45;
-    }
-
-    /* 表單 + 下拉框 */
-    .input-select,
+    .input-select, 
     .input-text {
-        padding: 12px;
-        font-size: 15px;
+        font-size: 14px;
+        padding: 11px 12px;
         border-radius: 10px;
     }
 
-    /* Checkbox：兩欄但不會擠爆 */
+    /* 📌 Checkbox：iPhone 最終修正版（不歪） */
     .checkbox-group {
-        display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 12px 14px;
+        gap: 12px 12px;
+        margin-top: 14px;
     }
 
     .checkbox-group label {
-        font-size: 15px;
-        line-height: 1.45;
-        white-space: nowrap;    /* 避免掉 1～2 字到下一行 */
+        font-size: 14.5px;
+        line-height: 1.35;
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 10px;
     }
 
-    /* Checkbox 勾勾 iPhone 對齊修正 */
+    /* 🔥 終於不歪的 checkbox */
     .checkbox-group input[type="checkbox"] {
+        appearance: none;
+        -webkit-appearance: none;
         width: 20px;
         height: 20px;
-        border-width: 2px;
-        border-radius: 5px;
+        border: 2px solid #AFC7D9;
+        border-radius: 6px;
+        background: #fff;
+        display: grid;
+        place-content: center;
+        cursor: pointer;
+        margin-top: 1px; /* 與文字自然對齊 */
     }
 
-    .checkbox-group input[type="checkbox"]:checked::after {
-        content: "✔";
-        font-size: 15px;
-        position: absolute;
-        top: 0px;
-        left: 4px;
+    .checkbox-group input[type="checkbox"]::before {
+        content: "";
+        width: 12px;
+        height: 12px;
+        transform: scale(0);
+        transition: 0.18s ease;
+        background-color: var(--blue-main);
+        border-radius: 3px;
     }
 
-    /* 按鈕 */
+    .checkbox-group input[type="checkbox"]:checked::before {
+        transform: scale(1);
+    }
+
     .submit-btn {
-        font-size: 16.5px;
-        padding: 15px;
+        font-size: 16px;
+        padding: 14px;
         border-radius: 12px;
-        margin: 10px 0 20px;
+        margin-top: 12px;
     }
 
-    /* 結果卡片 */
+    /* 📌 天氣結果卡片 */
     .weather-card {
-        padding: 26px 20px;
+        padding: 26px 18px;
         border-radius: 18px;
-        margin: 26px 0 36px;
+        margin: 28px 0 34px;
     }
 
-    .weather-tag {
-        font-size: 22px;
-        margin-bottom: 10px;
-        line-height: 1.4;
-    }
+    .weather-tag { font-size: 22px; margin-bottom: 12px; }
+    .weather-text { font-size: 15px; line-height: 1.65; }
+    .weather-advice { font-size: 14.5px; }
 
-    .weather-text {
-        font-size: 15.5px;
-        margin-bottom: 18px;
-    }
-
-    .weather-stats-box {
-        padding: 16px 14px;
-        border-radius: 14px;
-    }
-
-    .weather-advice {
+    .weather-subtext { 
         font-size: 15px;
-        line-height: 1.6;
+        margin-bottom: 24px;
     }
 
-    .weather-end {
+    .weather-end { 
         font-size: 14.5px;
-        margin-top: 22px;
+        margin-top: 20px;
     }
 
-    /* Footer */
     .app-footer {
-        font-size: 12.5px;
-        padding: 26px 0 40px;
+        font-size: 12px;
+        padding: 26px 0;
     }
 }
