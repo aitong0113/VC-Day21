@@ -205,7 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (isHistory) {
 
         const CSV_URL =
-            "https://docs.google.com/spreadsheets/d/e/2PACX-1vReMWrH0NTh6Ia8CHhYBO7wwn7tADRCLa8vFKJTAIwPnWOEwuZioYWeO0BX_bFY7pizn5VRpkRxpy29b/pub?output=csv";
+            "https://docs.google.com/spreadsheets/d/e/2PACX-1vReMWrHOhNT6Ia8CHhYBO7wWN7tADRCL8vFKJTAIwPnWOEwuZioYWEoOBX_bFY7pizn5VRpkRxpy29b/pub?output=csv";
 
         async function loadCSV() {
             const res = await fetch(CSV_URL);
