@@ -67,8 +67,8 @@ Keyword	Tag	Score
 
 首次進入網站會建立：
 
-```localStorage.myUUID
-localStorage.userMap```
+localStorage.myUUID
+localStorage.userMap
 
 每位使用者都會被分配成 user1 / user2 / user3…
 用於 Google Sheet 資料區隔。
