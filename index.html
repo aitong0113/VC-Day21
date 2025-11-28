@@ -66,8 +66,17 @@
 
                 <select id="sleep" class="input-select">
                     <option value="">請選擇</option>
-                    <option>0</option><option>1</option><option>2</option><option>3</option><option>4</option>
-                    <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+                    <option>0</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
                 </select>
             </div>
         </section>
@@ -188,6 +197,15 @@
             <div id="weatherOutput"></div>
         </section>
 
+
+        <button class="history-btn" onclick="window.open('history.html', '_blank')">
+            📘 查看心天氣紀錄
+        </button>
+
+        <section class="history-section card" id="history" style="display:none;">
+            <p class="placeholder">正在讀取你的紀錄…</p>
+            <div id="historyOutput"></div>
+        </section>
     </main>
 
     <!-- JS -->

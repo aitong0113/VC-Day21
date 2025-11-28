@@ -89,13 +89,13 @@ body {
     text-align: right;
 }
 
-/* Intro 動畫 */
+/* Intro Animation */
 @keyframes fadeIntro {
     from { opacity: 0; transform: translateY(10px); }
     to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Card Base */
+/* Card */
 .card {
     background: var(--card-white);
     padding: 22px 20px;
@@ -105,7 +105,6 @@ body {
     border: 1px solid #e7eaf0;
 }
 
-/* Label */
 .label {
     font-weight: 700;
     font-size: 15px;
@@ -120,7 +119,7 @@ body {
     font-weight: 400;
 }
 
-/* Inputs */
+/* Input */
 .input-select, .input-text {
     width: 100%;
     padding: 12px;
@@ -153,36 +152,26 @@ body {
     color: #5a6575;
 }
 
-/* ----- Desktop Checkbox（乾淨版，iPhone 不會歪） ----- */
+/* ✔ 全平台統一 SVG 勾勾（最穩定版本） */
 .checkbox-group input[type="checkbox"] {
     appearance: none;
     -webkit-appearance: none;
-    width: 20px;
-    height: 20px;
-    border: 2px solid #d6e8de;
-    border-radius: 5px;
-    background: #fff;
-    display: grid;
-    place-content: center;
+    width: 22px;
+    height: 22px;
+    border: 2px solid #cce7d8;
+    border-radius: 6px;
+    background-color: #fff;
     cursor: pointer;
-}
-
-.checkbox-group input[type="checkbox"]::before {
-    content: "✔";
-    font-size: 14px;
-    font-weight: 700;
-    color: #4a4a4a;
-    transform: scale(0);
-    transition: 0.2s ease;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 14px 14px;
 }
 
 .checkbox-group input[type="checkbox"]:checked {
-    background: #e5f6ed;
-    border-color: #e5f6ed;
-}
+    border-color: #b4dfc6;
+    background-color: #e5f6ed;
 
-.checkbox-group input[type="checkbox"]:checked::before {
-    transform: scale(1);
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='%234a5056' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
 }
 
 /* Button */
@@ -200,23 +189,33 @@ body {
     box-shadow: 0 4px 12px rgba(135,166,197,0.25);
 }
 
-/* Result */
-.result { min-height: 120px; margin-top: 24px; }
-.placeholder { color: #a1aab7; font-size: 15px; }
-
-/* 主色調小標題 */
-.main-accent-title {
+/* 查看紀錄按鈕 */
+.history-btn {
+    width: 100%;
+    padding: 14px;
+    background: #ffffff;
     color: var(--blue-main);
-    font-weight: 700;
-    font-size: 17px;
-    letter-spacing: 0.5px;
-    margin-bottom: 12px;
+    border: 2px solid var(--blue-main);
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 20px 0;
+    cursor: pointer;
+    transition: 0.2s ease;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 6px;
 }
 
-.main-accent-title::before { content: ""; }
+.history-btn:hover {
+    background: var(--blue-main);
+    color: #ffffff;
+}
+
+/* Result */
+.result { min-height: 120px; margin-top: 24px; }
+.placeholder { color: #a1aab7; font-size: 15px; }
 
 /* Weather Card */
 .weather-card {
@@ -230,7 +229,7 @@ body {
 }
 
 .weather-tag { font-size: 28px; margin-bottom: 16px; color: #6a87b6; }
-.weather-text { font-size: 17px; line-height: 1.8; color: #5f6c7b; }
+.weather-subtext { font-size: 18px; color: var(--blue-main); margin-bottom: 28px; }
 .weather-advice { font-size: 16px; line-height: 1.7; }
 
 .weather-stats-box {
@@ -243,22 +242,11 @@ body {
     max-width: 520px;
 }
 
-.weather-subtext {
-    font-size: 18px;
-    color: var(--blue-main);
-    margin-top: 12px;
-    margin-bottom: 28px;
-    text-align: center;
-    opacity: 0.85;
-    letter-spacing: 0.4px;
-}
-
 .weather-end {
     color: var(--blue-main);
     font-size: 16px;
     margin-top: 24px;
     opacity: 0.9;
-    letter-spacing: 0.5px;
 }
 
 /* Footer */
@@ -269,15 +257,93 @@ body {
     font-size: 13px;
 }
 
+
+/* -----------------------------------------
+   📘 心天氣紀錄表格（美化版）
+----------------------------------------- */
+
+.history-section {
+    margin-top: 40px;
+}
+
+.history-section h2 {
+    text-align: center;
+    color: var(--blue-main);
+    font-size: 26px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+/* 表格外框 */
+.history-table-wrapper {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    border: 1px solid #e0e6ef;
+    overflow-x: auto;
+}
+
+/* 真正的表格 */
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+    margin: 0 auto;
+    color: #4a4a4a;
+}
+
+/* 表頭 */
+.history-table thead th {
+    background: #f3f7fb;
+    padding: 12px 14px;
+    text-align: center;
+    font-weight: 700;
+    color: #6d7b92;
+    border-bottom: 2px solid #dce3ec;
+    white-space: nowrap;
+}
+
+/* 每一列 */
+.history-table tbody tr {
+    transition: background 0.15s ease;
+}
+
+.history-table tbody tr:hover {
+    background: #f9fcff;
+}
+
+/* 儲存格 */
+.history-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #eef2f6;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* 讓 weather 的 emoji 不黑掉 */
+.history-table td.weather-cell {
+    font-size: 18px;
+}
+
+/* 手機版 RWD */
+@media (max-width: 480px) {
+    .history-table td,
+    .history-table th {
+        padding: 10px 8px;
+        font-size: 13px;
+    }
+}
+
+
 /* -------------------------------------------
-   📱 全新手機版 RWD（最終優化版）
+   📱 RWD 手機（最終）
 ------------------------------------------- */
 @media (max-width: 480px) {
 
     body {
         padding: 18px;
         font-size: 15px;
-        line-height: 1.55;
     }
 
     .logo-img { width: 110px; }
@@ -287,130 +353,30 @@ body {
         margin: 6px 0 20px;
     }
 
-    /* ✦ 導入更柔的段落配置 */
     p, .intro-text, .weather-text, .weather-end {
-        line-height: 1.68;
-        max-width: 34em;
-        margin-left: auto;
-        margin-right: auto;
+        line-height: 1.7;
     }
 
-    /* Intro 卡片：更小、更呼吸感 */
-    .intro-card {
-        padding: 20px 18px;
-        margin: 0 0 24px;
-        border-radius: 12px;
-    }
+    .intro-card { padding: 20px 18px; border-radius: 12px; }
 
-    .intro-title { 
-        font-size: 17px;
-        margin-bottom: 6px;
-        line-height: 1.4;
-    }
+    .card { padding: 18px; border-radius: 12px; }
 
-    .intro-sign  { 
-        font-size: 13px;
-        margin-top: 12px;
-        text-align: right;
-        opacity: 0.8;
-    }
+    .checkbox-group label { font-size: 15px; white-space: nowrap; }
 
-    .section-title {
-        font-size: 16px;
-        margin: 26px 0 12px;
-    }
-
-    .card {
-        padding: 18px;
-        border-radius: 12px;
-        margin-bottom: 20px;
-    }
-
-    .label { font-size: 15px; }
-    .label small { font-size: 13px; }
-
-    /* 表單 + 下拉框 */
-    .input-select,
-    .input-text {
-        padding: 12px;
-        font-size: 15px;
-        border-radius: 10px;
-    }
-
-    /* Checkbox：兩欄但不會擠爆 */
     .checkbox-group {
         grid-template-columns: 1fr 1fr;
         gap: 12px 12px;
-        margin-top: 14px;
     }
 
-    .checkbox-group label {
-        font-size: 15px;
-        line-height: 1.45;
-        white-space: nowrap;    /* 避免掉 1～2 字到下一行 */
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    /* Checkbox 勾勾 iPhone 對齊修正 */
-    .checkbox-group input[type="checkbox"] {
-        appearance: none;
-        -webkit-appearance: none;
-        width: 20px;
-        height: 20px;
-        border-width: 2px;
-        border-radius: 5px;
-    }
-
-    .checkbox-group input[type="checkbox"]:checked::after {
-        content: "✔";
-        font-size: 15px;
-        position: absolute;
-        top: 0px;
-        left: 4px;
-    }
-
-    /* 按鈕 */
-    .submit-btn {
-        font-size: 16.5px;
-        padding: 15px;
-        border-radius: 12px;
-        margin: 10px 0 20px;
-    }
-
-    /* 結果卡片 */
     .weather-card {
         padding: 26px 18px;
         border-radius: 18px;
         margin: 28px 0 34px;
     }
 
-    .weather-tag {
-        font-size: 22px;
-        margin-bottom: 10px;
-        line-height: 1.4;
-    }
-
-    .weather-text {
-        font-size: 15.5px;
-        margin-bottom: 18px;
-    }
-
-    .weather-stats-box {
-        padding: 16px 14px;
-        border-radius: 14px;
-    }
-
-    .weather-advice {
-        font-size: 15px;
-        line-height: 1.6;
-    }
-
-    .weather-end {
-        font-size: 14.5px;
-        margin-top: 22px;
-    }
+    .weather-tag { font-size: 22px; }
+    .weather-text { font-size: 15.5px; }
+    .weather-end { font-size: 14.5px; }
 
     .app-footer {
         font-size: 12px;
@@ -419,23 +385,96 @@ body {
 }
 
 
-/* ====== 勾選框強制修復：確保手機版不會跑位 ====== */
-.checkbox-group input[type="checkbox"] {
-    position: relative !important;  
-    width: 22px;
-    height: 22px;
-    appearance: none;
-    border: 1px solid #cce7d8;
-    border-radius: 6px;
-    background: #fff;
-    cursor: pointer;
+/* -----------------------------------------
+   📘 心天氣紀錄表格（精緻柔霧美學版）
+----------------------------------------- */
+
+/* 表格外框容器 */
+.history-table-wrapper {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 14px rgba(150,170,190,0.12);
+    border: 1px solid #e5e9f0;
+    overflow-x: auto; /* 手機可滑動 */
+    margin: 0 auto;
+    max-width: 900px;
 }
 
-.checkbox-group input[type="checkbox"]:checked::after {
-    content: "✔";
-    position: absolute;
-    font-size: 18px;
-    color: #4a5056;
-    left: 3px;
-    top: -3px;
+/* 表格本體 */
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+    color: #4a4a4a;
+    min-width: 720px; /* 防止手機太擠 */
+}
+
+/* 表頭 */
+.history-table thead th {
+    background: #f2f6fa;
+    color: #6d7b92;
+    padding: 14px 12px;
+    font-weight: 700;
+    border-bottom: 2px solid #d8e0ea;
+    white-space: nowrap;
+    text-align: center;
+    position: sticky;
+    top: 0;            /* 讓表頭固定 */
+    z-index: 2;
+}
+
+/* 表格列 Hover */
+.history-table tbody tr {
+    transition: background 0.15s ease;
+}
+
+.history-table tbody tr:hover {
+    background: #f9fcff;
+}
+
+/* 儲存格 */
+.history-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #edf1f6;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* 心天氣 emoji */
+.history-table td.weather-cell {
+    font-size: 22px;
+    line-height: 1.2;
+}
+
+
+/* -----------------------------------------
+   📱 心天氣紀錄手機 RWD（480px 以下）
+----------------------------------------- */
+
+@media (max-width: 480px) {
+
+    .history-table-wrapper {
+        padding: 14px;
+        border-radius: 12px;
+    }
+
+    .history-table {
+        font-size: 13px;
+        min-width: 600px; /* 更適合手機滑動 */
+    }
+
+    .history-table thead th {
+        padding: 10px 6px;
+        font-size: 13px;
+    }
+
+    .history-table td {
+        padding: 10px 6px;
+        font-size: 13px;
+    }
+
+    .history-table td.weather-cell {
+        font-size: 18px;
+    }
 }

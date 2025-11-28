@@ -1,187 +1,258 @@
-//-----------------------------------------
-// 🌤 今日心天氣 · AI 智能版（工程師重構版）
-//-----------------------------------------
+//------------------------------------------------------
+// 🌤 今日心天氣 × 我的心天氣紀錄（整合版 script.js）
+//------------------------------------------------------
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    //-----------------------------------------
-    // 📌 DOM 統一集中管理
-    //-----------------------------------------
-    const DOM = {
-        btn: document.querySelector(".submit-btn"),
-        resultBox: document.getElementById("result"),
-        loading: document.getElementById("loadingText"),
-        output: document.getElementById("weatherOutput"),
+    // 偵測是否是首頁或紀錄頁
+    const isIndex = document.querySelector(".submit-btn") !== null;
+    const isHistory = document.getElementById("historyOutput") !== null;
 
-        sleep: document.getElementById("sleep"),
-        bodyFree: document.getElementById("body-free"),
-        moodFree: document.getElementById("mood-free"),
-    };
+    //---------------------------------------------
+    // 🆔 UUID + 匿名 userAlias
+    //---------------------------------------------
+    function getUUID() {
+        let id = localStorage.getItem("myUUID");
+        if (!id) {
+            id = crypto.randomUUID();
+            localStorage.setItem("myUUID", id);
+        }
+        return id;
+    }
 
-    //-----------------------------------------
-    // 📌 Checkbox 工具
-    //-----------------------------------------
-    const getChecked = id =>
-        [...document.querySelectorAll(`#${id} input[type="checkbox"]:checked`)]
-            .map(el => el.value);
+    function getUserAlias() {
+        const uuid = getUUID();
+        let map = JSON.parse(localStorage.getItem("userMap") || "{}");
 
-    //-----------------------------------------
-    // 📌 合併工具（去重）
-    //-----------------------------------------
-    const mergeUnique = (a, b) => [...new Set([...a, ...b])];
+        if (!map[uuid]) {
+            const next = Object.keys(map).length + 1;
+            map[uuid] = `user${next}`;
+            localStorage.setItem("userMap", JSON.stringify(map));
+        }
+        return map[uuid];
+    }
 
-    //-----------------------------------------
-    // 📌 AI 弱語意模型（資料集中管理）
-    //-----------------------------------------
-    const EMOTION_RULES = [
-        { kw: ["累", "疲", "倦", "撐"], score: -3, out: "明顯疲累" },
-        { kw: ["緊", "僵"], score: -2, out: "肩頸緊" },
-        { kw: ["暈", "頭重"], score: -2, out: "小頭暈" },
-        { kw: ["悶", "壓"], score: -3, out: "胸悶" },
-        { kw: ["焦", "不安"], score: -4, out: "焦慮" },
-        { kw: ["煩"], score: -2, out: "小煩悶" },
-        { kw: ["低落", "難過"], score: -3, out: "小低落" },
-        { kw: ["哭", "淚"], score: -4, out: "想哭" },
-        { kw: ["亂", "爆掉", "不穩"], score: -5, out: "情緒不穩" },
+    const userAlias = getUserAlias();
 
-        // 正向
-        { kw: ["還好", "平靜", "ok", "可以"], score: +2, out: "平靜" },
-        { kw: ["穩", "安定"], score: +3, out: "穩定" },
-    ];
 
-    //-----------------------------------------
-    // 📌 AI 語意分析
-    //-----------------------------------------
-    function analyzeEmotion(text) {
+    //---------------------------------------------
+    // 📌 Checkbox values
+    //---------------------------------------------
+    function getCheckedValues(id) {
+        return [...document.querySelectorAll(`#${id} input:checked`)].map(x => x.value);
+    }
+
+    //---------------------------------------------
+    // 📌 AI-style 情緒語義分析
+    //---------------------------------------------
+    function analyzeTextEmotion(text) {
         if (!text) return { score: 0, inferred: [] };
 
-        let score = 0;
-        let inferred = [];
         const t = text.toLowerCase();
+        let score = 0;
+        let out = [];
 
-        EMOTION_RULES.forEach(rule => {
-            rule.kw.forEach(k => {
+        const rules = [
+            { kw: ["累", "疲"], score: -3, out: "明顯疲累" },
+            { kw: ["緊", "僵"], score: -2, out: "肩頸緊" },
+            { kw: ["暈", "頭重"], score: -2, out: "小頭暈" },
+            { kw: ["悶", "壓"], score: -3, out: "胸悶" },
+            { kw: ["焦"], score: -4, out: "焦慮" },
+            { kw: ["煩"], score: -2, out: "小煩悶" },
+            { kw: ["低落"], score: -3, out: "小低落" },
+            { kw: ["哭", "淚"], score: -4, out: "想哭" },
+
+            { kw: ["平靜", "ok", "還好"], score: +1, out: "平靜" },
+            { kw: ["穩", "安定"], score: +2, out: "穩定" }
+        ];
+
+        rules.forEach(r => {
+            r.kw.forEach(k => {
                 if (t.includes(k)) {
-                    score += rule.score;
-                    inferred.push(rule.out);
+                    score += r.score;
+                    out.push(r.out);
                 }
             });
         });
 
-        return { score, inferred };
+        return { score, inferred: out };
     }
 
-    //-----------------------------------------
-    // ⭐ 分數計算（拆成小 Functions）
-    //-----------------------------------------
+    //------------------------------------------------------
+    // 🌈 【首頁】啟動分析
+    //------------------------------------------------------
+    if (isIndex) {
 
-    function calcSleepScore(sleep) {
-        return sleep * 2; // 中性 5 → 10 分
-    }
+        const btn = document.querySelector(".submit-btn");
+        const resultBox = document.getElementById("result");
+        const loadingText = document.getElementById("loadingText");
+        const weatherOutput = document.getElementById("weatherOutput");
 
-    function calcBodyScore(list) {
-        let score = 0;
-        list.forEach(item => {
-            if (["明顯疲累", "胸悶"].includes(item)) score -= 3;
-            if (["肩頸緊", "小頭暈", "反覆頭暈"].includes(item)) score -= 1;
-            if (["強烈焦慮"].includes(item)) score -= 4;
+        // ⭐⭐⭐ 把這裡貼上你的 /exec ⭐⭐⭐
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbxmIG16QhFUhSBfyKUh7PF3IjVXHOrR6RzBKjAMQ4UVsxD-P2-AaYbOl6-C7YG0jSiatg/exec";
+
+        btn.addEventListener("click", async () => {
+
+            const sleep = Number(document.getElementById("sleep").value);
+            if (!sleep && sleep !== 0) {
+                resultBox.style.display = "block";
+                loadingText.innerText = "🌧 請填寫睡眠分數唷～";
+                return;
+            }
+
+            // Checkbox
+            const body = getCheckedValues("body-group");
+            const mood = getCheckedValues("mood-group");
+
+            // Free text
+            const bodyFree = document.getElementById("body-free").value;
+            const moodFree = document.getElementById("mood-free").value;
+
+            const bodyAI = analyzeTextEmotion(bodyFree);
+            const moodAI = analyzeTextEmotion(moodFree);
+
+            const finalBody = [...new Set([...body, ...bodyAI.inferred])];
+            const finalMood = [...new Set([...mood, ...moodAI.inferred])];
+
+            // ---------------- 分數 ----------------
+            let score = sleep * 1.5;
+
+            finalBody.forEach(b => {
+                if (["明顯疲累", "胸悶"].includes(b)) score -= 4;
+                if (["肩頸緊", "小頭暈"].includes(b)) score -= 2;
+            });
+
+            finalMood.forEach(m => {
+                if (["明顯低落"].includes(m)) score -= 5;
+                if (["小煩悶", "小低落"].includes(m)) score -= 2;
+                if (["平靜"].includes(m)) score += 1;
+                if (["穩定"].includes(m)) score += 2;
+            });
+
+            score += (bodyAI.score + moodAI.score) * 0.5;
+
+            // ---------------- 天氣 ----------------
+            let weather, reason, suggestion;
+
+            if (score >= 12) {
+                weather = "☀️ 晴朗";
+                reason = "你今天能量很足！";
+                suggestion = "適合創作、推進任務。";
+            } else if (score >= 6) {
+                weather = "🌤 微晴";
+                reason = "今天狀態大致穩定。";
+                suggestion = "做些輕量任務很適合。";
+            } else if (score >= 1) {
+                weather = "☁️ 陰";
+                reason = "有些疲倦。";
+                suggestion = "做簡單的事就好。";
+            } else if (score >= -5) {
+                weather = "🌧 小雨";
+                reason = "狀態需要被接住。";
+                suggestion = "好好休息一下。";
+            } else {
+                weather = "⛈ 暴雨";
+                reason = "你承受很多。";
+                suggestion = "停一下，照顧自己。";
+            }
+
+            // ---------------- 顯示 loading ----------------
+            resultBox.style.display = "block";
+            weatherOutput.style.display = "none";
+            loadingText.style.display = "block";
+
+            // ---------------- 📌 回傳到 Google Sheet ----------------
+            const payload = {
+                userAlias,
+                sleep,
+                body: finalBody,
+                mood: finalMood,
+                score,
+                weather,
+                reason,
+                suggestion,
+                note: moodFree + " / " + bodyFree
+            };
+
+            await fetch(GAS_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            // ---------------- 顯示結果 ----------------
+            setTimeout(() => {
+                loadingText.style.display = "none";
+                weatherOutput.style.display = "block";
+
+                weatherOutput.innerHTML = `
+                    <div class="weather-card">
+                        <div class="weather-tag">${weather}</div>
+                        <p class="weather-text">${reason}</p>
+                        <div class="weather-stats-box">
+                            <p class="main-accent-title">⚡ 今日建議節奏</p>
+                            <ul class="weather-advice"><li>${suggestion}</li></ul>
+                        </div>
+                        <p class="weather-end">我陪著你，不用一個人面對今天。</p>
+                    </div>
+                `;
+            }, 900);
         });
-        return score;
+
+        // ⭐ 開新分頁跳到紀錄頁
+        const goHistory = document.getElementById("goHistory");
+        if (goHistory) {
+            goHistory.addEventListener("click", () => {
+                window.open("history.html", "_blank");
+            });
+        }
     }
 
-    function calcMoodScore(list) {
-        let score = 0;
-        list.forEach(m => {
-            if (["情緒不穩", "想哭", "明顯低落"].includes(m)) score -= 3;
-            if (["小煩悶", "小低落", "胸口悶"].includes(m)) score -= 1;
-            if (["平靜"].includes(m)) score += 2;
-            if (["穩定"].includes(m)) score += 4;
-        });
-        return score;
+    //------------------------------------------------------
+    // 📄 【紀錄頁】讀取 Google Sheet CSV
+    //------------------------------------------------------
+    if (isHistory) {
+
+        const CSV_URL =
+            "https://docs.google.com/spreadsheets/d/e/2PACX-1vReMWrHOhNT6Ia8CHhYBO7wWN7tADRCL8vFKJTAIwPnWOEwuZioYWEoOBX_bFY7pizn5VRpkRxpy29b/pub?output=csv";
+
+        async function loadCSV() {
+            const res = await fetch(CSV_URL);
+            const text = await res.text();
+            return text.split("\n").map(r => r.split(","));
+        }
+
+        async function renderHistory() {
+
+            const rows = await loadCSV();
+            const header = rows[0];
+            const dataRows = rows.slice(1);
+
+            const output = document.getElementById("historyOutput");
+
+            const data = dataRows.filter(r => r[1] === userAlias);
+
+            if (data.length === 0) {
+                output.innerHTML = "<p class='placeholder'>目前沒有找到你的紀錄。</p>";
+                return;
+            }
+
+            let html = "<table class='history-table'><tr>";
+            header.forEach(h => html += `<th>${h}</th>`);
+            html += "</tr>";
+
+            data.forEach(row => {
+                html += "<tr>";
+                row.forEach(col => html += `<td>${col}</td>`);
+                html += "</tr>";
+            });
+
+            html += "</table>";
+
+            output.innerHTML = html;
+        }
+
+        renderHistory();
     }
-
-    function calcFreeTextScore(bodyAI, moodAI) {
-        return (bodyAI.score + moodAI.score) * 0.3; // 降低權重
-    }
-
-    //-----------------------------------------
-    // ☁️ 天氣決定器（獨立）
-    //-----------------------------------------
-    function getWeatherResult(score) {
-        if (score >= 18)
-            return ["☀️ 晴朗", "你今天能量很足，心很亮。", "適合進度、創作、挑戰。"];
-
-        if (score >= 10)
-            return ["🌤 微晴", "整體穩定，只有小雲。", "輕量節奏，動靜皆宜。"];
-
-        if (score >= 4)
-            return ["☁️ 陰陰的", "有些累，但你依然很努力。", "做最簡單的一件事就好。"];
-
-        if (score >= -3)
-            return ["🌧 小雨", "身心在耗能，需要慢下來。", "休息一下，讓自己被接住。"];
-
-        return ["⛈ 暴雨", "你今天承受很多。", "優先照顧心和身。"];
-    }
-
-    //-----------------------------------------
-    // 🎨 Render 結果（獨立）
-    //-----------------------------------------
-    function renderWeather(weather, reason, suggestion) {
-        DOM.output.innerHTML = `
-            <div class="weather-card">
-                <div class="weather-tag">${weather}</div>
-                <p class="weather-text">${reason}</p>
-
-                <div class="weather-stats-box">
-                    <p class="main-accent-title">⚡ 今日的建議節奏：</p>
-                    <ul class="weather-advice"><li>${suggestion}</li></ul>
-                </div>
-
-                <p class="weather-end">我陪著你，你不用一個人面對今天的天氣。</p>
-            </div>
-        `;
-    }
-
-    //-----------------------------------------
-    // 🌤 主邏輯（變得超乾淨）
-    //-----------------------------------------
-    function generateWeather() {
-
-        // ⭐ 睡眠（可空 → 中性 5）
-        const sleep = DOM.sleep.value === "" ? 5 : Number(DOM.sleep.value);
-
-        const body = getChecked("body-group");
-        const mood = getChecked("mood-group");
-
-        const bodyAI = analyzeEmotion(DOM.bodyFree.value);
-        const moodAI = analyzeEmotion(DOM.moodFree.value);
-
-        const finalBody = mergeUnique(body, bodyAI.inferred);
-        const finalMood = mergeUnique(mood, moodAI.inferred);
-
-        // 📌 計算總分
-        const score =
-            calcSleepScore(sleep) +
-            calcBodyScore(finalBody) +
-           calcMoodScore(finalMood) +
-            calcFreeTextScore(bodyAI, moodAI);
-
-        // UI Loading
-        DOM.resultBox.style.display = "block";
-        DOM.loading.style.display = "block";
-        DOM.output.style.display = "none";
-        DOM.loading.innerText = "等一下，我正在讀取你的心天氣…";
-
-        setTimeout(() => {
-            const [weather, reason, suggestion] = getWeatherResult(score);
-            DOM.loading.style.display = "none";
-            DOM.output.style.display = "block";
-            renderWeather(weather, reason, suggestion);
-        }, 900);
-    }
-
-    //-----------------------------------------
-    // 🔘 事件啟動
-    //-----------------------------------------
-    DOM.btn.addEventListener("click", generateWeather);
 });

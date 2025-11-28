@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的心天氣紀錄</title>
+
+    <link rel="stylesheet" href="style.css"> <!-- 你的主 CSS -->
+
+    <style>
+        /* 這裡只保留頁面自己的 layout，不放表格 CSS */
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background: var(--bg-blue);
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 28px;
+            color: var(--blue-main);
+            font-size: 30px;
+        }
+
+        .history-table-wrapper {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>📘 我的心天氣紀錄</h1>
+
+    <!-- 表格容器 -->
+    <div class="history-table-wrapper">
+        <div id="historyOutput" class="history-section"></div>
+    </div>
+
+    <script>
+        //-----------------------------------------
+        // 📄 讀取 Google Sheet（CSV）
+        //-----------------------------------------
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReMWrHOhNT6Ia8CHhYBO7wWN7tADRCL8vFKJTAIwPnWOEwuZioYWEoOBX_bFY7pizn5VRpkRxpy29b/pub?output=csv";
+
+            const myUserId = localStorage.getItem("userId");
+            console.log("My userId:", myUserId);
+
+            async function loadCSV() {
+                const response = await fetch(CSV_URL);
+                const text = await response.text();
+                return text.split("\n").map(row => row.split(","));
+            }
+
+            const rows = await loadCSV();
+            const header = rows[0];
+            const dataRows = rows.slice(1);
+
+            // 過濾自己的紀錄
+            const myData = dataRows.filter(row => row[1] === myUserId);
+
+            const output = document.getElementById("historyOutput");
+
+            if (myData.length === 0) {
+                output.innerHTML = "<p style='padding:20px;'>目前沒有找到你的紀錄。</p>";
+                return;
+            }
+
+            // 生成表格 HTML
+            let tableHtml = `
+            <div class="history-table-wrapper">
+                <table class="history-table">
+                    <thead><tr>`;
+
+            header.forEach(title => {
+                tableHtml += `<th>${title}</th>`;
+            });
+
+            tableHtml += `</tr></thead><tbody>`;
+
+            myData.forEach(row => {
+                tableHtml += `<tr>`;
+                row.forEach((col, index) => {
+                    if (header[index] === "weather") {
+                        tableHtml += `<td class="weather-cell">${col}</td>`;
+                    } else {
+                        tableHtml += `<td>${col}</td>`;
+                    }
+                });
+                tableHtml += `</tr>`;
+            });
+
+            tableHtml += `</tbody></table></div>`;
+
+            output.innerHTML = tableHtml;
+        });
+    </script>
+</body>
+
+</html>
