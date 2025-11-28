@@ -53,7 +53,7 @@ body { --mobile-flag: false; }
     box-shadow: var(--shadow);
     border: 1px solid #e0e6ef;
     overflow-x: auto;
-    max-width: 1200px;
+    max-width: 1250px;
     margin: 0 auto;
 }
 

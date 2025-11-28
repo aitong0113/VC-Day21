@@ -1,12 +1,10 @@
 //------------------------------------------------------
-// 「心天氣紀錄」純淨版 script.js
+// 心天氣紀錄（新版）
 //------------------------------------------------------
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    // ---------------------------------------------------
-    // 🆔 UUID + userAlias（個人識別碼）
-    // ---------------------------------------------------
+    // UUID（每台手機都會不同）
     function getUUID() {
         let id = localStorage.getItem("myUUID");
         if (!id) {
@@ -16,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return id;
     }
 
+    // userX（每台裝置都會獨立）
     function getUserAlias() {
         const uuid = getUUID();
         let map = JSON.parse(localStorage.getItem("userMap") || "{}");
@@ -32,11 +31,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ---------------------------------------------------
-    // 📄【紀錄頁】讀取 CSV（trim 修復版）
+    // 📄 使用你最新提供的 CSV URL
     // ---------------------------------------------------
-
     const CSV_URL =
         "https://docs.google.com/spreadsheets/d/e/2PACX-1vReMWrHOhNT6Ia8CHhYBO7wWN7tADRCL8vFKJTAIwPnWOEwuZioYWEoOBX_bFY7pizn5VRpkRxpy29b/pub?output=csv";
+
 
     async function loadCSV() {
         const res = await fetch(CSV_URL);
@@ -46,9 +45,10 @@ document.addEventListener("DOMContentLoaded", () => {
             .trim()
             .split("\n")
             .map(r =>
-                r.split(",").map(c => (c || "").trim()) // 清洗字元
+                r.split(",").map(c => (c || "").trim())
             );
     }
+
 
     async function renderHistory() {
         const rows = await loadCSV();
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const output = document.getElementById("historyOutput");
 
-        // 使用 trim 避免 CSV 隱藏字元問題
+        // 🔍 過濾目前使用者
         const myData = dataRows.filter(
             r => (r[1] || "").trim() === userAlias.trim()
         );
@@ -67,7 +67,9 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // ---- 桌面版表格 ----
+        // -------------------------
+        //  桌面版表格模式
+        // -------------------------
         let html = "<table class='history-table'><tr>";
         header.forEach(h => html += `<th>${h}</th>`);
         html += "</tr>";
@@ -82,7 +84,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         output.innerHTML = html;
 
-        // ---- 手機卡片模式 ----
+        // -------------------------
+        //  手機卡片模式
+        // -------------------------
         renderMobileCards(myData, header);
     }
 
@@ -90,23 +94,17 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-
-// -------------------------------------------------------
-// 📱 手機卡片渲染器（獨立純淨版）
-// -------------------------------------------------------
-function isMobileView() {
-    const flag = getComputedStyle(document.body).getPropertyValue("--mobile-flag");
-    return flag.trim() === "true";
-}
-
+//------------------------------------------------------
+// 📱 手機卡片渲染
+//------------------------------------------------------
 
 function renderMobileCards(rows, header) {
 
-    // 📌 使用 CSS RWD 的 matchMedia 判斷手機
     const isMobile = window.matchMedia("(max-width: 600px)").matches;
     if (!isMobile) return;
 
     const wrapper = document.querySelector(".history-table-wrapper");
+
     const cardList = document.createElement("div");
     cardList.className = "history-card-list";
 
