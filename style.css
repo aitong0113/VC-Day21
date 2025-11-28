@@ -153,27 +153,34 @@ body {
     color: #5a6575;
 }
 
+/* Checkbox（不會歪版） */
 .checkbox-group input[type="checkbox"] {
     appearance: none;
-    width: 18px;
-    height: 18px;
-    border: 2px solid var(--soft-yellow);
+    width: 20px;
+    height: 20px;
+    border: 2px solid #d6e8de;
     border-radius: 4px;
     background: #fff;
-    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: #4a4a4a;
 }
 
+/* 勾勾 */
 .checkbox-group input[type="checkbox"]:checked {
-    background: var(--soft-yellow);
-    border-color: var(--soft-yellow);
+    background: #e5f6ed;
+    border-color: #e5f6ed;
 }
 
 .checkbox-group input[type="checkbox"]:checked::after {
     content: "✔";
-    position: absolute;
-    top: -1px;
-    left: 2.5px;
+    display: block;
+    transform: translateY(-0.5px);   /* 微調上下 */
     font-size: 14px;
+    color: #4a4a4a;
 }
 
 /* Button */
