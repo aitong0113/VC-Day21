@@ -198,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // ⭐ 寫入 Google Sheet
         //------------------------------------------------------
         const payload = {
-            userAlias,
+            userId: userAlias,
             sleep,
             body: finalBody,
             mood: finalMood,
