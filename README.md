@@ -1,3 +1,15 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/aitong0113/VC-Day21/main/images/banner.png"
+       alt="今日心天氣 Banner"
+       width="90%"
+       style="border-radius: 12px; box-shadow: 0 4px 18px rgba(0,0,0,0.15);" />
+</p>
+
+<h1 align="center">☁️ 今日心天氣 Heart Weather</h1>
+<p align="center">你的每日心理狀態 × AI 小建議</p>
+<br>
+
+
 🌤️ 今日心天氣（Today’s Inner Weather）
 
 一個以 情緒 × 天氣隱喻 打造的療癒系 Web 小工具。
@@ -66,9 +78,10 @@ Keyword	Tag	Score
 3. 個人化 UUID → userAlias
 
 首次進入網站會建立：
-
+```
 localStorage.myUUID
 localStorage.userMap
+```
 
 每位使用者都會被分配成 user1 / user2 / user3…
 用於 Google Sheet 資料區隔。
