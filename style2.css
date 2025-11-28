@@ -1,0 +1,201 @@
+/* ------------------------------------------------------
+   🌦 心天氣紀錄（History Page 專用 / 完全獨立）
+------------------------------------------------------ */
+
+:root {
+    --blue-main: #7fa4c4;
+    --bg-blue: #f5f7fb;
+    --text-gray: #4a4a4a;
+    --text-light: #7a889a;
+    --radius: 16px;
+    --shadow: 0 4px 14px rgba(150, 170, 190, 0.12);
+}
+
+/* 頁面背景 / Body */
+body {
+    background: var(--bg-blue);
+    font-family: 'Noto Sans TC', sans-serif;
+    padding: 20px;
+    color: var(--text-gray);
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+/* 標題 */
+.history-title {
+    text-align: center;
+    color: var(--blue-main);
+    font-size: 28px;
+    margin-bottom: 26px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* ------------------------------
+   📘 表格（桌面版）
+------------------------------ */
+
+.history-table-wrapper {
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    border: 1px solid #e0e6ef;
+    overflow-x: auto;
+    max-width: 1150px;
+    margin: 0 auto;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+    color: var(--text-gray);
+    min-width: 900px; /* 避免擠壓 */
+}
+
+.history-table thead th {
+    background: #f3f7fb;
+    padding: 12px 14px;
+    text-align: center;
+    font-weight: 700;
+    color: #6d7b92;
+    border-bottom: 2px solid #dce3ec;
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.history-table tbody tr {
+    transition: background 0.15s ease;
+}
+
+.history-table tbody tr:hover {
+    background: #f9fcff;
+}
+
+.history-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #eef2f6;
+    text-align: center;
+
+    /* 防止內容溢出 */
+    white-space: normal;
+    word-break: break-word;
+    line-height: 1.5;
+}
+
+.history-table td.weather-cell {
+    font-size: 20px;
+}
+
+/* 桌面版隱藏手機卡片列表 */
+@media (min-width: 481px) {
+    .history-card-list {
+        display: none !important;
+    }
+}
+
+/* ------------------------------------------------------
+   📱 手機版卡片模式
+------------------------------------------------------ */
+@media (max-width: 480px) {
+
+    /* 隱藏表格（只顯示卡片） */
+    .history-table-wrapper table {
+        display: none;
+    }
+
+    /* 卡片列表 */
+    .history-card-list {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        margin-top: 10px;
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* 卡片 */
+    .history-card {
+        background: #ffffff;
+        padding: 18px 16px;
+        border-radius: 16px;
+        box-shadow: var(--shadow);
+        border: 1px solid #e6eaf0;
+    }
+
+    /* 每一列資訊 */
+    .history-card .row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 12px;
+    }
+
+    /* 標籤 */
+    .history-card .label {
+        color: #7b8a9c;
+        font-size: 13px;
+        font-weight: 600;
+        width: 70px;  /* 固定寬度讓排版整齊 */
+        flex-shrink: 0;
+    }
+
+    /* 內容文字 */
+    .history-card .row span:last-child {
+        font-size: 15px;
+        color: #4a4a4a;
+        font-weight: 600;
+        text-align: right;
+        line-height: 1.5;
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    /* 天氣 emoji */
+    .history-card .weather {
+        font-size: 16px !important;
+        color: #7b8a9c;
+    }
+
+    /* 建議（最後一欄會自然換行） */
+    .history-card .row:last-child span:last-child {
+        font-weight: 500;
+        color: #4a4a4a;
+        max-width: 100%;
+        white-space: normal;
+    }
+
+    /* 分隔線 */
+    .history-card .row:not(:last-child) {
+        border-bottom: 1px solid #f2f4f7;
+        padding-bottom: 8px;
+    }
+}
+
+/* ------------------------------------------------------
+   📱 手機排版微調（間距 / 字級）
+------------------------------------------------------ */
+@media (max-width: 480px) {
+    body {
+        padding: 16px;
+    }
+
+    .history-title {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+
+    .history-table-wrapper {
+        padding: 14px;
+        border-radius: 12px;
+    }
+}

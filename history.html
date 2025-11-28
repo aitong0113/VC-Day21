@@ -2,12 +2,14 @@
 <html lang="zh-Hant">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的心天氣紀錄</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>📘 我的心天氣紀錄</title>
 
-    <link rel="stylesheet" href="style.css">
+    <!-- 外部 CSS -->
+    <link rel="stylesheet" href="style2.css" />
 
+    <!-- 內嵌補充樣式（僅頁面框架） -->
     <style>
         body {
             font-family: 'Noto Sans TC', sans-serif;
@@ -31,14 +33,16 @@
 
 <body>
 
+    <!-- ⭐ 主標題 -->
     <h1>📘 我的心天氣紀錄</h1>
 
+    <!-- ⭐ 表格 / 手機卡片將插入這裡 -->
     <div class="history-table-wrapper">
-        <div id="historyOutput" class="history-section"></div>
+        <section id="historyOutput" class="history-section"></section>
     </div>
 
-    <!-- ★ 使用 Abbie 的整合版 script.js -->
-    <script src="script.js?v=2"></script>
+    <!-- ⭐ 整合版 JS（純紀錄頁） -->
+    <script src="script2.js"></script>
 
 </body>
 

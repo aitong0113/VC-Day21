@@ -1,5 +1,5 @@
 /* ----------------------------------
-   🌤 今日心天氣 · 精緻柔霧美學版（Desktop Base）
+   🌤 今日心天氣 · 精緻柔霧美學版（輸入頁專用）
 ---------------------------------- */
 
 :root {
@@ -107,7 +107,6 @@ body {
         opacity: 0;
         transform: translateY(10px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
@@ -124,6 +123,7 @@ body {
     border: 1px solid #e7eaf0;
 }
 
+/* Label */
 .label {
     font-weight: 700;
     font-size: 15px;
@@ -174,7 +174,7 @@ body {
     color: #5a6575;
 }
 
-/* ✔ 全平台統一 SVG 勾勾（最穩定版本） */
+/* ✔ SVG 勾勾（最穩定版本） */
 .checkbox-group input[type="checkbox"] {
     appearance: none;
     -webkit-appearance: none;
@@ -192,11 +192,10 @@ body {
 .checkbox-group input[type="checkbox"]:checked {
     border-color: #b4dfc6;
     background-color: #e5f6ed;
-
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='%234a5056' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
 }
 
-/* Button */
+/* Buttons */
 .submit-btn {
     width: 100%;
     padding: 16px;
@@ -211,7 +210,6 @@ body {
     box-shadow: 0 4px 12px rgba(135, 166, 197, 0.25);
 }
 
-/* 查看紀錄按鈕 */
 .history-btn {
     width: 100%;
     padding: 14px;
@@ -263,10 +261,10 @@ body {
     color: #6a87b6;
 }
 
-.weather-subtext {
+.weather-text {
     font-size: 18px;
     color: var(--blue-main);
-    margin-bottom: 28px;
+    margin-bottom: 22px;
 }
 
 .weather-advice {
@@ -299,88 +297,8 @@ body {
     font-size: 13px;
 }
 
-
-/* -----------------------------------------
-   📘 心天氣紀錄表格（美化版）
------------------------------------------ */
-
-.history-section {
-    margin-top: 40px;
-}
-
-.history-section h2 {
-    text-align: center;
-    color: var(--blue-main);
-    font-size: 26px;
-    margin-bottom: 20px;
-    font-weight: 700;
-}
-
-/* 表格外框 */
-.history-table-wrapper {
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 16px;
-    box-shadow: var(--shadow);
-    border: 1px solid #e0e6ef;
-    overflow-x: auto;
-}
-
-/* 真正的表格 */
-.history-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 15px;
-    margin: 0 auto;
-    color: #4a4a4a;
-}
-
-/* 表頭 */
-.history-table thead th {
-    background: #f3f7fb;
-    padding: 12px 14px;
-    text-align: center;
-    font-weight: 700;
-    color: #6d7b92;
-    border-bottom: 2px solid #dce3ec;
-    white-space: nowrap;
-}
-
-/* 每一列 */
-.history-table tbody tr {
-    transition: background 0.15s ease;
-}
-
-.history-table tbody tr:hover {
-    background: #f9fcff;
-}
-
-/* 儲存格 */
-.history-table td {
-    padding: 12px 14px;
-    border-bottom: 1px solid #eef2f6;
-    text-align: center;
-    white-space: nowrap;
-}
-
-/* 讓 weather 的 emoji 不黑掉 */
-.history-table td.weather-cell {
-    font-size: 18px;
-}
-
-/* 手機版 RWD */
-@media (max-width: 480px) {
-
-    .history-table td,
-    .history-table th {
-        padding: 10px 8px;
-        font-size: 13px;
-    }
-}
-
-
 /* -------------------------------------------
-   📱 RWD 手機（最終）
+   📱 RWD – 手機優化
 ------------------------------------------- */
 @media (max-width: 480px) {
 
@@ -390,35 +308,13 @@ body {
     }
 
     .logo-img {
-        width: 110px;
-    }
-
-    .logo-box {
-        margin-top: 10px;
-        margin-bottom: 6px;
-        /* ← LOGO 下方距離更小 */
-
-    }
-
-    .logo-img {
-        width: 90px;
-        /* 比原本更合適 */
+        width: 100px;
     }
 
     .title {
-        margin-top: -3px;
-        /* ← 標題往上靠 */
-        margin-bottom: 12px;
-        /* ← 跟 intro 卡片保持剛好距離 */
-        font-size: 22px;
-        /* 你原本手機字級 */
-    }
-
-    p,
-    .intro-text,
-    .weather-text,
-    .weather-end {
-        line-height: 1.7;
+        margin-top: -5px;
+        font-size: 24px;
+        margin-bottom: 10px;
     }
 
     .intro-card {
@@ -431,135 +327,23 @@ body {
         border-radius: 12px;
     }
 
-    .checkbox-group label {
-        font-size: 15px;
-        white-space: nowrap;
-    }
-
     .checkbox-group {
         grid-template-columns: 1fr 1fr;
         gap: 12px 12px;
     }
 
+    .history-btn {
+        font-size: 14px;
+        padding: 12px;
+    }
+
     .weather-card {
-        padding: 26px 18px;
+        padding: 28px 20px;
         border-radius: 18px;
         margin: 28px 0 34px;
     }
 
     .weather-tag {
         font-size: 22px;
-    }
-
-    .weather-text {
-        font-size: 15.5px;
-    }
-
-    .weather-end {
-        font-size: 14.5px;
-    }
-
-    .app-footer {
-        font-size: 12px;
-        padding: 26px 0;
-    }
-}
-
-
-/* -----------------------------------------
-   📘 心天氣紀錄表格（精緻柔霧美學版）
------------------------------------------ */
-
-/* 表格外框容器 */
-.history-table-wrapper {
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 16px;
-    box-shadow: 0 4px 14px rgba(150, 170, 190, 0.12);
-    border: 1px solid #e5e9f0;
-    overflow-x: auto;
-    /* 手機可滑動 */
-    margin: 0 auto;
-    max-width: 900px;
-}
-
-/* 表格本體 */
-.history-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 15px;
-    color: #4a4a4a;
-    min-width: 720px;
-    /* 防止手機太擠 */
-}
-
-/* 表頭 */
-.history-table thead th {
-    background: #f2f6fa;
-    color: #6d7b92;
-    padding: 14px 12px;
-    font-weight: 700;
-    border-bottom: 2px solid #d8e0ea;
-    white-space: nowrap;
-    text-align: center;
-    position: sticky;
-    top: 0;
-    /* 讓表頭固定 */
-    z-index: 2;
-}
-
-/* 表格列 Hover */
-.history-table tbody tr {
-    transition: background 0.15s ease;
-}
-
-.history-table tbody tr:hover {
-    background: #f9fcff;
-}
-
-/* 儲存格 */
-.history-table td {
-    padding: 12px 14px;
-    border-bottom: 1px solid #edf1f6;
-    text-align: center;
-    white-space: nowrap;
-}
-
-/* 心天氣 emoji */
-.history-table td.weather-cell {
-    font-size: 22px;
-    line-height: 1.2;
-}
-
-
-/* -----------------------------------------
-   📱 心天氣紀錄手機 RWD（480px 以下）
------------------------------------------ */
-
-@media (max-width: 480px) {
-
-    .history-table-wrapper {
-        padding: 14px;
-        border-radius: 12px;
-    }
-
-    .history-table {
-        font-size: 13px;
-        min-width: 600px;
-        /* 更適合手機滑動 */
-    }
-
-    .history-table thead th {
-        padding: 10px 6px;
-        font-size: 13px;
-    }
-
-    .history-table td {
-        padding: 10px 6px;
-        font-size: 13px;
-    }
-
-    .history-table td.weather-cell {
-        font-size: 18px;
     }
 }
