@@ -147,42 +147,42 @@ body {
 
 .checkbox-group label {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 10px;
     font-size: 15px;
     color: #5a6575;
 }
 
-/* Checkbox（不會歪版） */
+/* ----- Desktop Checkbox（乾淨版，iPhone 不會歪） ----- */
 .checkbox-group input[type="checkbox"] {
     appearance: none;
+    -webkit-appearance: none;
     width: 20px;
     height: 20px;
     border: 2px solid #d6e8de;
-    border-radius: 4px;
+    border-radius: 5px;
     background: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 700;
-    font-size: 14px;
-    color: #4a4a4a;
+    display: grid;
+    place-content: center;
+    cursor: pointer;
 }
 
-/* 勾勾 */
+.checkbox-group input[type="checkbox"]::before {
+    content: "✔";
+    font-size: 14px;
+    font-weight: 700;
+    color: #4a4a4a;
+    transform: scale(0);
+    transition: 0.2s ease;
+}
+
 .checkbox-group input[type="checkbox"]:checked {
     background: #e5f6ed;
     border-color: #e5f6ed;
 }
 
-.checkbox-group input[type="checkbox"]:checked::after {
-    content: "✔";
-    display: block;
-    transform: translateY(-0.5px);   /* 微調上下 */
-    font-size: 14px;
-    color: #4a4a4a;
-    top: -3px;
-    left: 2.5px;
+.checkbox-group input[type="checkbox"]:checked::before {
+    transform: scale(1);
 }
 
 /* Button */
@@ -204,9 +204,9 @@ body {
 .result { min-height: 120px; margin-top: 24px; }
 .placeholder { color: #a1aab7; font-size: 15px; }
 
-/* 主色調專用小標題（天氣結果區塊用） */
+/* 主色調小標題 */
 .main-accent-title {
-    color: var(--blue-main);      /* 你的藍色主色調 */
+    color: var(--blue-main);
     font-weight: 700;
     font-size: 17px;
     letter-spacing: 0.5px;
@@ -216,10 +216,7 @@ body {
     gap: 6px;
 }
 
-/* Emoji 微調，與文字完美對齊 */
-.main-accent-title::before {
-    content: "";
-}
+.main-accent-title::before { content: ""; }
 
 /* Weather Card */
 .weather-card {
@@ -236,7 +233,6 @@ body {
 .weather-text { font-size: 17px; line-height: 1.8; color: #5f6c7b; }
 .weather-advice { font-size: 16px; line-height: 1.7; }
 
-
 .weather-stats-box {
     background: #f7faff;
     padding: 18px 20px;
@@ -247,20 +243,18 @@ body {
     max-width: 520px;
 }
 
-/* 副標題（天氣標題下那一句） */
 .weather-subtext {
     font-size: 18px;
-    color: var(--blue-main);   /* 主色調藍 */
+    color: var(--blue-main);
     margin-top: 12px;
     margin-bottom: 28px;
     text-align: center;
-    opacity: 0.85;             /* 柔和一點 */
+    opacity: 0.85;
     letter-spacing: 0.4px;
 }
 
-/* 最底部安定那一句 */
 .weather-end {
-    color: var(--blue-main);   /* 主色調藍 */
+    color: var(--blue-main);
     font-size: 16px;
     margin-top: 24px;
     opacity: 0.9;
@@ -291,15 +285,13 @@ body {
     .title {
         font-size: 22px;
         margin: 10px 0 16px;
-        letter-spacing: 1px;
     }
 
-    /* 📌 Intro 區塊：手機最佳排版 */
     .intro-card {
         padding: 20px 18px;
         margin: 0 0 24px;
         border-radius: 12px;
-        text-align: left;               /* 左對齊才不會中間只剩三個字 */
+        text-align: left;
     }
 
     .intro-title { 
@@ -313,9 +305,7 @@ body {
         font-size: 14px;
         line-height: 1.62;
         margin-bottom: 14px;
-        color: #6d7b8c;
         text-align: left;
-        letter-spacing: 0.4px;
     }
 
     .intro-sign  { 
@@ -339,14 +329,13 @@ body {
     .label { font-size: 15px; }
     .label small { font-size: 13px; }
 
-    .input-select, 
-    .input-text {
+    .input-select, .input-text {
         font-size: 14px;
         padding: 11px 12px;
         border-radius: 10px;
     }
 
-    /* 📌 Checkbox：iPhone 最終修正版（不歪） */
+    /* 📌 iPhone 最終修正版 checkbox（絕對不歪） */
     .checkbox-group {
         grid-template-columns: 1fr 1fr;
         gap: 12px 12px;
@@ -355,66 +344,30 @@ body {
 
     .checkbox-group label {
         font-size: 14.5px;
-        line-height: 1.35;
         display: flex;
         align-items: center;
         gap: 10px;
     }
 
-    /* 🔥 終於不歪的 checkbox */
     .checkbox-group input[type="checkbox"] {
-        appearance: none;
-        -webkit-appearance: none;
         width: 20px;
         height: 20px;
         border-radius: 6px;
-        background: #fff;
-        display: grid;
-        place-content: center;
-        cursor: pointer;
-        margin-top: 1px; /* 與文字自然對齊 */
+        margin-top: 1px;
     }
 
-    .checkbox-group input[type="checkbox"]::before {
-        content: "";
-        width: 12px;
-        height: 12px;
-        transform: scale(0);
-        transition: 0.18s ease;
-        border-radius: 3px;
-    }
-
-    .checkbox-group input[type="checkbox"]:checked::before {
-        transform: scale(1);
-    }
-
-    .submit-btn {
-        font-size: 16px;
-        padding: 14px;
-        border-radius: 12px;
-        margin-top: 12px;
-    }
-
-    /* 📌 天氣結果卡片 */
     .weather-card {
         padding: 26px 18px;
         border-radius: 18px;
         margin: 28px 0 34px;
     }
 
-    .weather-tag { font-size: 22px; margin-bottom: 12px; }
-    .weather-text { font-size: 15px; line-height: 1.65; }
+    .weather-tag { font-size: 22px; }
+    .weather-text { font-size: 15px; }
     .weather-advice { font-size: 14.5px; }
 
-    .weather-subtext { 
-        font-size: 15px;
-        margin-bottom: 24px;
-    }
-
-    .weather-end { 
-        font-size: 14.5px;
-        margin-top: 20px;
-    }
+    .weather-subtext { font-size: 15px; margin-bottom: 24px; }
+    .weather-end { font-size: 14.5px; margin-top: 20px; }
 
     .app-footer {
         font-size: 12px;
