@@ -107,18 +107,14 @@ VC-Day21/
 
 👉 https://aitong0113.github.io/VC-Day21/
 
-⸻
-
-📸 Screenshot
-
-（你可以加入 2–4 張截圖：首頁、loading、分析結果、紀錄頁）
-我也可以幫你做好專案 Banner 圖（像 Dribbble 風格）。
 
 ⸻
 
 ✍️ 作者（Author）
 
 Abbie Lin ｜ Frontend & UI/UX Designer
+
 跨心理 × 設計 × 前端的創作者。
+
 💌 GitHub: https://github.com/aitong0113
 
