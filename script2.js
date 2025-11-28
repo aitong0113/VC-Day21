@@ -94,6 +94,12 @@ document.addEventListener("DOMContentLoaded", () => {
 // -------------------------------------------------------
 // 📱 手機卡片渲染器（獨立純淨版）
 // -------------------------------------------------------
+function isMobileView() {
+    const flag = getComputedStyle(document.body).getPropertyValue("--mobile-flag");
+    return flag.trim() === "true";
+}
+
+
 function renderMobileCards(rows, header) {
 
     // 📌 使用 CSS RWD 的 matchMedia 判斷手機
