@@ -3,108 +3,119 @@
 ---------------------------------- */
 
 :root {
-  --blue-main: #7fa4c4;
-  --blue-dark: #6a8fc0;
-  --soft-yellow: #e5f6ed;
-  --bg-blue: #f5f7fb;
-  --text-gray: #4a4a4a;
-  --text-light: #7a889a;
-  --card-white: #ffffff;
-  --radius: 16px;
-  --shadow: 0 4px 14px rgba(150, 170, 190, 0.12);
+    --blue-main: #7fa4c4;
+    --blue-dark: #6a8fc0;
+    --soft-yellow: #e5f6ed;
+    --bg-blue: #f5f7fb;
+    --text-gray: #4a4a4a;
+    --text-light: #7a889a;
+    --card-white: #ffffff;
+    --radius: 16px;
+    --shadow: 0 4px 14px rgba(150, 170, 190, 0.12);
 }
 
 /* ---------------- Body ---------------- */
 body {
-  background: var(--bg-blue);
-  font-family: 'Noto Sans TC', sans-serif;
-  padding: 28px 20px;
-  color: var(--text-gray);
-  line-height: 1.6;
-  box-sizing: border-box;
+    background: var(--bg-blue);
+    font-family: 'Noto Sans TC', sans-serif;
+    padding: 28px 20px;
+    color: var(--text-gray);
+    line-height: 1.6;
+    box-sizing: border-box;
 }
 
-*, *::before, *::after {
-  box-sizing: inherit;
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
 }
 
 /* ---------------- Layout ---------------- */
 .container {
-  max-width: 720px;
-  margin: 0 auto;
+    max-width: 720px;
+    margin: 0 auto;
 }
 
 /* ---------------- Logo ---------------- */
 .logo-box {
-  text-align: center;
-  margin-bottom: 10px;   /* ✔ 更自然的距離 */
+    text-align: center;
+    margin-bottom: 10px;
+    /* ✔ 更自然的距離 */
 }
 
 .logo-img {
-  width: 140px;
-  height: auto;
+    width: 140px;
+    height: auto;
 
 }
 
 /* ---------------- Title ---------------- */
 .title {
-  text-align: center;
-  font-size: 30px;
-  font-weight: 700;
-  color: var(--blue-main);
-  margin-top: -20px;     /* ✔ 微調靠近 Logo */
-  margin-bottom: 6px;
-  letter-spacing: 1px;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--blue-main);
+    margin-top: -20px;
+    /* ✔ 微調靠近 Logo */
+    margin-bottom: 6px;
+    letter-spacing: 1px;
 }
 
 .subtitle {
-  text-align: center;
-  font-size: 15px;
-  color: var(--text-light);
-  margin-bottom: 28px;
+    text-align: center;
+    font-size: 15px;
+    color: var(--text-light);
+    margin-bottom: 28px;
 }
 
 /* ---------------- Section Title ---------------- */
 .section-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--text-light);
-  margin: 32px 0 14px;
-  letter-spacing: 0.5px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-light);
+    margin: 32px 0 14px;
+    letter-spacing: 0.5px;
 }
 
 /* ---------------- Intro Card ---------------- */
 .intro-card {
-  background: #ffffff;
-  padding: 22px 24px;
-  border-radius: 18px;
-  max-width: 720px;
-  margin: 0 auto 28px auto;
-  box-shadow: 0 4px 14px rgba(150, 170, 190, 0.12);
-  border: 1px solid #e7eaf0;
-  text-align: center;
-  animation: fadeIntro 0.6s ease-out;
+    background: #ffffff;
+    padding: 22px 24px;
+    border-radius: 18px;
+    max-width: 720px;
+    margin: 0 auto 28px auto;
+    box-shadow: 0 4px 14px rgba(150, 170, 190, 0.12);
+    border: 1px solid #e7eaf0;
+    text-align: center;
+    animation: fadeIntro 0.6s ease-out;
 }
 
 .intro-title {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--blue-main);
-  margin-bottom: 12px;
-  letter-spacing: 0.5px;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--blue-main);
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
 }
 
 .intro-text {
-  font-size: 15px;
-  color: #6c7a8c;
-  line-height: 1.7;
-  margin-bottom: 8px;
+    font-size: 15px;
+    color: #6c7a8c;
+    line-height: 1.7;
+    margin-bottom: 8px;
 }
 
 /* Intro 卡片淡入動畫 */
 @keyframes fadeIntro {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 
@@ -113,277 +124,479 @@ body {
 
 /* ---------------- Intro Card（更小、淡、低存在感） ---------------- */
 .intro-card {
-  background: #f9fcff;
-  padding: 22px 20px;                /* 卡片縮小 */
-  border-radius: 14px;
-  max-width: 800px;                 /* 寬度縮小 */
-  margin: 40px auto 24px auto;      /* ⭐ LOGO 與卡片距離 ↑ 增加 */
-  border: 1px solid #eef1f5;         /* 更輕的邊框 */
-  text-align: center;
-  animation: fadeIntro 0.6s ease-out;
+    background: #f9fcff;
+    padding: 22px 20px;
+    /* 卡片縮小 */
+    border-radius: 14px;
+    max-width: 800px;
+    /* 寬度縮小 */
+    margin: 40px auto 24px auto;
+    /* ⭐ LOGO 與卡片距離 ↑ 增加 */
+    border: 1px solid #eef1f5;
+    /* 更輕的邊框 */
+    text-align: center;
+    animation: fadeIntro 0.6s ease-out;
 }
 
 .intro-title {
-  font-size: 17px;                   /* ⭐ 標題縮小不搶戲 */
-  font-weight: 600;
-  color: #a1c1de;
-  margin-bottom: 10px;
+    font-size: 17px;
+    /* ⭐ 標題縮小不搶戲 */
+    font-weight: 600;
+    color: #a1c1de;
+    margin-bottom: 10px;
 }
 
 .intro-text {
-  font-size: 14px;                   /* ⭐ 正文更小、更柔 */
-  color: #a2afbe ;
-  line-height: 1.65;
-  margin-bottom: 6px;
+    font-size: 14px;
+    /* ⭐ 正文更小、更柔 */
+    color: #a2afbe;
+    line-height: 1.65;
+    margin-bottom: 6px;
 }
 
 /* Intro 卡片淡入動畫 */
 @keyframes fadeIntro {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .intro-sign {
-  text-align: right;
-  margin-top: 12px;
-  font-size: 14px;
-  color: #9aa5b6;
-  letter-spacing: 0.5px;
-  opacity: 0.85;
+    text-align: right;
+    margin-top: 12px;
+    font-size: 14px;
+    color: #9aa5b6;
+    letter-spacing: 0.5px;
+    opacity: 0.85;
 }
 
 
 
 /* ---------------- Card ---------------- */
 .card {
-  background: var(--card-white);
-  padding: 22px 20px;
-  border-radius: var(--radius);
-  margin-bottom: 22px;
-  box-shadow: var(--shadow);
-  border: 1px solid #e7eaf0;
-  width: 100%;
+    background: var(--card-white);
+    padding: 22px 20px;
+    border-radius: var(--radius);
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid #e7eaf0;
+    width: 100%;
 }
 
 /* ---------------- Label ---------------- */
 .label {
-  font-weight: 700;
-  font-size: 15px;
-  color: var(--blue-main);
-  margin-bottom: 10px;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--blue-main);
+    margin-bottom: 10px;
 }
 
 .label small {
-  display: block;
-  margin-top: 4px;
-  color: var(--text-light);
-  font-weight: 400;
-  line-height: 1.4;
+    display: block;
+    margin-top: 4px;
+    color: var(--text-light);
+    font-weight: 400;
+    line-height: 1.4;
 }
 
 /* ---------------- Inputs ---------------- */
 .input-select,
 .input-text {
-  width: 100%;
-  padding: 12px;
-  border-radius: var(--radius);
-  border: 1.6px solid var(--soft-yellow);
-  margin-top: 12px;
-  background: #fafafa;
-  font-size: 15px;
-  transition: 0.2s ease;
-  line-height: 1.4;
+    width: 100%;
+    padding: 12px;
+    border-radius: var(--radius);
+    border: 1.6px solid var(--soft-yellow);
+    margin-top: 12px;
+    background: #fafafa;
+    font-size: 15px;
+    transition: 0.2s ease;
+    line-height: 1.4;
 }
 
 .input-select:focus,
 .input-text:focus {
-  outline: none;
-  border-color: var(--blue-main);
-  background: #ffffff;
-  box-shadow: 0 0 0 3px rgba(135, 166, 197, 0.15);
+    outline: none;
+    border-color: var(--blue-main);
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(135, 166, 197, 0.15);
 }
 
 /* ---------------- Checkbox Group ---------------- */
 .checkbox-group {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px 16px;
-  margin-top: 12px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px 16px;
+    margin-top: 12px;
 }
 
 .checkbox-group label {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  font-size: 15px;
-  color: #5a6575;
-  cursor: pointer;
-  line-height: 1.3;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 15px;
+    color: #5a6575;
+    cursor: pointer;
+    line-height: 1.3;
 }
 
 /* --- 自訂 checkbox --- */
 .checkbox-group input[type="checkbox"] {
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  border: 2px solid var(--soft-yellow);
-  border-radius: 4px;
-  background: #fff;
-  cursor: pointer;
-  position: relative;
-  flex-shrink: 0;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--soft-yellow);
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
 }
 
 /* 點擊後狀態 */
 .checkbox-group input[type="checkbox"]:checked {
-  background: var(--soft-yellow);
-  border-color: var(--soft-yellow);
+    background: var(--soft-yellow);
+    border-color: var(--soft-yellow);
 }
 
 /* 勾勾符號 */
 .checkbox-group input[type="checkbox"]:checked::after {
-  content: "✔";
-  position: absolute;
-  top: -1px;
-  left: 2.5px;
-  font-size: 14px;
-  color: #6b6b6b;
+    content: "✔";
+    position: absolute;
+    top: -1px;
+    left: 2.5px;
+    font-size: 14px;
+    color: #6b6b6b;
 }
 
 /* ---------------- Button ---------------- */
 .submit-btn {
-  width: 100%;
-  padding: 16px;
-  background: var(--blue-main);
-  color: white;
-  border: none;
-  border-radius: var(--radius);
-  font-size: 18px;
-  font-weight: 600;
-  margin-top: 16px;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(135, 166, 197, 0.25);
-  transition: 0.25s ease;
+    width: 100%;
+    padding: 16px;
+    background: var(--blue-main);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(135, 166, 197, 0.25);
+    transition: 0.25s ease;
 }
 
 .submit-btn:hover {
-  background: var(--blue-dark);
-  transform: translateY(-1px);
+    background: var(--blue-dark);
+    transform: translateY(-1px);
 }
 
 /* ---------------- Result ---------------- */
 .result {
-  min-height: 120px;
-  margin-top: 24px;
+    min-height: 120px;
+    margin-top: 24px;
 }
 
 .placeholder {
-  color: #a1aab7;
-  font-size: 15px;
+    color: #a1aab7;
+    font-size: 15px;
 }
 
 /* ---------------- Weather Card ---------------- */
 .weather-preview {
-  background: #ffffff;
-  padding: 26px;
-  border-radius: var(--radius);
-  margin-top: 22px;
-  box-shadow: var(--shadow);
-  border: 1px solid #e7eaf0;
+    background: #ffffff;
+    padding: 26px;
+    border-radius: var(--radius);
+    margin-top: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid #e7eaf0;
 }
 
 .weather-title {
-  font-size: 28px;
-  text-align: center;
-  margin-bottom: 10px;
-  color: var(--blue-dark);
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 10px;
+    color: var(--blue-dark);
 }
 
 .weather-reason {
-  text-align: center;
-  font-size: 16px;
-  color: #75849a;
-  margin-bottom: 20px;
+    text-align: center;
+    font-size: 16px;
+    color: #75849a;
+    margin-bottom: 20px;
 }
 
 .weather-box {
-  background: #f8fafc;
-  padding: 18px;
-  border-radius: 12px;
-  border: 1px solid #e3e8f0;
+    background: #f8fafc;
+    padding: 18px;
+    border-radius: 12px;
+    border: 1px solid #e3e8f0;
 }
 
 .weather-subtitle {
-  font-weight: 600;
-  color: var(--blue-dark);
-  margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--blue-dark);
+    margin-bottom: 8px;
 }
 
 .weather-list {
-  padding-left: 18px;
-  color: #555;
-  line-height: 1.7;
+    padding-left: 18px;
+    color: #555;
+    line-height: 1.7;
 }
 
 .weather-end {
-  text-align: center;
-  margin-top: 20px;
-  color: #8ea0b4;
+    text-align: center;
+    margin-top: 20px;
+    color: #8ea0b4;
 }
 
 /* ---------------------------------------
    ✨ Loading 動畫
 --------------------------------------- */
 .loading-box {
-  text-align: center;
-  padding: 20px;
+    text-align: center;
+    padding: 20px;
 }
 
 .spinner {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: 4px solid #dbe2ea;
-  border-top-color: var(--blue-main);
-  animation: spin 0.8s linear infinite;
-  margin: 0 auto 10px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 4px solid #dbe2ea;
+    border-top-color: var(--blue-main);
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 10px;
 }
 
 .loading-text {
-  color: #8fa2b6;
-  font-size: 15px;
+    color: #8fa2b6;
+    font-size: 15px;
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* ---------------------------------------
    ✨ 結果淡入動畫
 --------------------------------------- */
 .fade-in {
-  animation: fadeIn 0.5s ease forwards;
+    animation: fadeIn 0.5s ease forwards;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* ---------------- Footer ---------------- */
 .app-footer {
-  text-align: center;
-  padding: 20px 10px;
-  color: #8fa2b6;
-  font-size: 13px;
+    text-align: center;
+    padding: 20px 10px;
+    color: #8fa2b6;
+    font-size: 13px;
 }
 
 .app-footer .footer-line {
-  font-weight: 500;
-  color: #7a889a;
+    font-weight: 500;
+    color: #7a889a;
 }
 
 .app-footer .footer-sub {
-  font-size: 12px;
-  color: #a8b6c7;
+    font-size: 12px;
+    color: #a8b6c7;
+}
+
+
+
+
+/* =========================================
+   📱 Mobile 優化（手機版 480px 以下）
+   ========================================= */
+@media (max-width: 480px) {
+
+    /* 整體字體稍微放大 */
+    body {
+        font-size: 17px;
+        line-height: 1.7;
+    }
+
+    /* 標題縮小＋間距調整 */
+    .title {
+        font-size: 24px;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+
+    /* intro 卡片優化 */
+    .intro-card {
+        padding: 22px 20px;
+        margin: 0 10px 28px;
+    }
+
+    .intro-title {
+        font-size: 18px;
+    }
+
+    .intro-text {
+        font-size: 15.5px;
+    }
+
+    .intro-sign {
+        font-size: 15px;
+        margin-top: 16px;
+    }
+
+    /* section title */
+    .section-title {
+        font-size: 18px;
+        margin-left: 4px;
+        margin-bottom: 12px;
+    }
+
+    /* 卡片 */
+    .card {
+        padding: 22px 18px;
+        margin: 0 10px 24px;
+    }
+
+    .label {
+        font-size: 16px;
+    }
+
+    .label small {
+        font-size: 14px;
+    }
+
+    /* checkbox 區域 */
+    .checkbox-group label {
+        font-size: 16px;
+        padding: 4px 0;
+    }
+
+    /* ✔ 加大 checkbox 點擊區域 */
+    .checkbox-group input[type="checkbox"] {
+        width: 22px;
+        height: 22px;
+        margin-right: 10px;
+    }
+
+    /* 下拉選單 */
+    .input-select {
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    /* 輸入框 */
+    .input-text {
+        font-size: 15px;
+        padding: 12px;
+    }
+
+    /* 按鈕更易按 */
+    .submit-btn {
+        font-size: 18px;
+        padding: 16px;
+        border-radius: 14px;
+        margin: 0 12px 10px;
+    }
+
+    /* 結果卡 */
+    .weather-card {
+        padding: 28px 22px;
+        margin: 0 10px 40px;
+    }
+
+    .weather-tag {
+        font-size: 22px;
+    }
+
+    .weather-text {
+        font-size: 16px;
+    }
+
+    .weather-advice {
+        font-size: 15.5px;
+    }
+
+    .weather-end {
+        font-size: 15px;
+    }
+
+    /* footer */
+    .app-footer {
+        font-size: 14px;
+        padding-bottom: 40px;
+    }
+}
+
+
+
+/* -------------------------------------------
+   🌤 今日心天氣 · 結果卡片（恢復你原本喜歡的版本）
+------------------------------------------- */
+
+.weather-card {
+    background: #ffffff;
+    padding: 36px 30px;
+    border-radius: 24px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e6ebf2;
+    margin: 40px auto;
+    animation: fadeIn 0.6s ease-out;
+    text-align: center;
+}
+
+/* 天氣標題（含 emoji） */
+.weather-tag {
+    font-size: 28px;
+    font-weight: 700;
+    color: #6a87b6;
+    margin-bottom: 16px;
+}
+
+/* 中間主文字（原因） */
+.weather-text {
+    font-size: 17px;
+    color: #5f6c7b;
+    line-height: 1.8;
+    margin-bottom: 26px;
+}
+
+/* 建議區塊框框 */
+.weather-stats-box {
+    background: #f7faff;
+    padding: 18px 20px;
+    border-radius: 16px;
+    border: 1.5px solid #e3e8f0;
+    margin: 0 auto 24px auto;
+    text-align: left;
+    max-width: 520px;
+}
+
+.weather-advice {
+    font-size: 16px;
+    color: #556270;
+    line-height: 1.7;
+}
+
+/* 收尾文字 */
+.weather-end {
+    margin-top: 16px;
+    font-size: 15px;
+    color: #8a97a8;
 }
