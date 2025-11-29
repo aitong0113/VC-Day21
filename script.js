@@ -1,5 +1,5 @@
 //------------------------------------------------------
-// 🌤 今日心天氣（輸入頁）— 最貼近真人狀態 × user1/user2 最終穩定版
+// 🌤 今日心天氣（輸入頁）— 最終穩定版（含 userId + FormData）
 //------------------------------------------------------
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -20,21 +20,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     //------------------------------------------------------
-    // ⭐ userX（每台裝置不同，不使用 UUID 當 userId）
+    // ⭐ userX（每台裝置不同）
     //------------------------------------------------------
     function getUserAlias() {
         const uuid = getUUID();
         let map = JSON.parse(localStorage.getItem("userMap") || "{}");
 
         if (!map[uuid]) {
-            const next = Object.keys(map).length + 1;  // 生成 user1, user2...
+            const next = Object.keys(map).length + 1;
             map[uuid] = `user${next}`;
             localStorage.setItem("userMap", JSON.stringify(map));
         }
-        return map[uuid];   // ⭐ 回傳 user1/user2 這種
+        return map[uuid];
     }
 
-    const userAlias = getUserAlias(); // ⭐ 寫入 Google Sheet 用的 userId
+    const userAlias = getUserAlias();
 
 
     //------------------------------------------------------
@@ -43,7 +43,6 @@ document.addEventListener("DOMContentLoaded", () => {
     function getCheckedValues(id) {
         return [...document.querySelectorAll(`#${id} input:checked`)].map(x => x.value);
     }
-
 
     //------------------------------------------------------
     // 📌 自然語義分析（輕權重）
@@ -83,9 +82,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     //------------------------------------------------------
-    // 🌈 分析 + 寫入 Google Sheet
+    // 🌈 GAS URL
     //------------------------------------------------------
-
     const GAS_URL =
         "https://script.google.com/macros/s/AKfycbxnpLgLahXe9sMyfKvjxjSVjwiQrFWy3VDaVpVIDzAHGsxxjmqKQdtt_aZEkz-hTbo/exec";
 
@@ -94,22 +92,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const weatherOutput = document.getElementById("weatherOutput");
     const loadingText = document.getElementById("loadingText");
 
+
+    //------------------------------------------------------
+    // 📤 送出（主程式）
+    //------------------------------------------------------
     btn.addEventListener("click", async () => {
 
-        //------------------------------------------------------
-        // 🔸 睡眠
-        //------------------------------------------------------
         const sleep = Number(document.getElementById("sleep").value);
-
         if (!sleep && sleep !== 0) {
             resultBox.style.display = "block";
             loadingText.innerText = "🌧 請填寫睡眠分數唷～";
             return;
         }
 
-        //------------------------------------------------------
-        // 🔸 Checkbox + 自由輸入
-        //------------------------------------------------------
         const body = getCheckedValues("body-group");
         const mood = getCheckedValues("mood-group");
 
@@ -123,14 +118,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const finalBody = [...new Set([...body, ...bodyAI.inferred])];
         const finalMood = [...new Set([...mood, ...moodAI.inferred])];
 
-
         //------------------------------------------------------
-        // ⭐ 分數（保持你原本的模型）
+        // ⭐ 計算分數（沿用你的模型）
         //------------------------------------------------------
-
-        // 1. 睡眠
         let score = 0;
 
+        // 睡眠
         if (sleep >= 7) score += 10;
         else if (sleep === 6) score += 8;
         else if (sleep === 5) score += 5;
@@ -140,13 +133,13 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (sleep === 1) score -= 4;
         else if (sleep === 0) score -= 6;
 
-        // 2. 身體
+        // 身體
         finalBody.forEach(b => {
             if (["明顯疲累", "胸悶"].includes(b)) score -= 2;
             if (["肩頸緊", "小頭暈"].includes(b)) score -= 1;
         });
 
-        // 3. 心情
+        // 心情
         finalMood.forEach(m => {
             if (m === "明顯低落") score -= 3;
             if (m === "想哭") score -= 3;
@@ -157,12 +150,12 @@ document.addEventListener("DOMContentLoaded", () => {
             if (m === "穩定") score += 3;
         });
 
-        // 4. AI 推論
+        // AI 推論（輕權重）
         score += (bodyAI.score + moodAI.score) * 0.2;
 
 
         //------------------------------------------------------
-        // ⭐ 天氣分類（保持你的分類）
+        // ⭐ 天氣分類
         //------------------------------------------------------
         let weather, insight, suggestion;
 
@@ -188,9 +181,8 @@ document.addEventListener("DOMContentLoaded", () => {
             suggestion = "停一下，好好照顧自己。";
         }
 
-
         //------------------------------------------------------
-        // ⭐ Loading
+        // ⭐ Loading 顯示
         //------------------------------------------------------
         resultBox.style.display = "block";
         loadingText.style.display = "block";
@@ -207,10 +199,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         //------------------------------------------------------
-        // ⭐ ★ 這裡很重要：寫入 userId（一定要 match history 頁）
+        // ⭐ 準備送給 GAS 的資料（payload）
         //------------------------------------------------------
         const payload = {
-            userId: userAlias,   // ⭐ 不要叫 userAlias，history 頁抓的是 userId！
+            userId: userAlias,
             sleep,
             body: finalBody.join("、") || "-",
             mood: finalMood.join("、") || "-",
@@ -221,16 +213,23 @@ document.addEventListener("DOMContentLoaded", () => {
             note: finalNote
         };
 
+
+        //------------------------------------------------------
+        // ⭐ ★ 使用 FormData（無 CORS 問題）
+        //------------------------------------------------------
+        const fd = new FormData();
+        for (const key in payload) {
+            fd.append(key, payload[key]);
+        }
+
         await fetch(GAS_URL, {
             method: "POST",
-            mode: "no-cors",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
+            body: fd
         });
 
 
         //------------------------------------------------------
-        // ⭐ 顯示天氣卡
+        // ⭐ 顯示天氣結果卡片
         //------------------------------------------------------
         setTimeout(() => {
             loadingText.style.display = "none";

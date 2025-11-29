@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     //---------------------------------------------------
-    // 📄 CSV URL（記得更新成你自己的）
+    // 📄 CSV URL（你的 Google Sheet → CSV）
     //---------------------------------------------------
     const CSV_URL =
         "https://docs.google.com/spreadsheets/d/e/2PACX-1vSVuma4D1e-wojt__hQyH-BySTz2RdihXOHmU7JXuoAD4zfqy2tHgV5hz5F4x-OQv13IXej2kxSI7Vt/pub?output=csv";
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const output = document.getElementById("historyOutput");
 
-        // ⭐ 找出自己的 userId（第 2 欄＝ index 1）
+        // ⭐ 找出自己的 userId（第 2 欄 index 1）
         const myData = dataRows.filter(
             r => (r[1] || "").trim() === userAlias.trim()
         );
@@ -89,10 +89,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             row.forEach((col, i) => {
                 col = (col || "").replace(/\n/g, "").trim() || "-";
-
                 let cls = "";
                 if (i === 5) cls = "score-cell"; // 分數欄高亮
-
                 html += `<td class="${cls}">${col}</td>`;
             });
 
@@ -113,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 //------------------------------------------------------
-// 📱 手機卡片渲染
+// 📱 手機卡片渲染（已修正 timestamp 問題）
 //------------------------------------------------------
 
 function renderMobileCards(rows, header) {
@@ -130,7 +128,7 @@ function renderMobileCards(rows, header) {
         const card = document.createElement("div");
         card.className = "history-card";
 
-        // 轉成物件格式（header → value）
+        // ⭐轉成物件格式（header → value）
         const o = {};
         header.forEach((h, i) => {
             o[h] = (r[i] || "-").trim() || "-";
@@ -138,9 +136,11 @@ function renderMobileCards(rows, header) {
 
         const t = key => o[key] ?? "-"; // 安全取值
 
+        // ⭐timestamp 一律抓 header[0] 的名稱
+        const tsKey = header[0];
 
         card.innerHTML = `
-            <div class="row"><span class="label">時間</span><span class="value">${t("timestamp")}</span></div>
+            <div class="row"><span class="label">時間</span><span class="value">${t(tsKey)}</span></div>
             <div class="row"><span class="label">睡眠</span><span class="value">${t("sleep")}</span></div>
             <div class="row"><span class="label">身體</span><span class="value">${t("body")}</span></div>
             <div class="row"><span class="label">心情</span><span class="value">${t("mood")}</span></div>
