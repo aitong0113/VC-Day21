@@ -49,7 +49,7 @@ body { --mobile-flag: false; }
 .history-table-wrapper {
     background: #ffffff;
     padding: 24px;
-    border-radius: 16px;
+    border-radius: var(--radius);
     box-shadow: var(--shadow);
     border: 1px solid #e0e6ef;
     overflow-x: auto;
@@ -65,7 +65,7 @@ body { --mobile-flag: false; }
     min-width: 900px; /* 避免擠壓 */
 }
 
-
+/* 表頭 */
 .history-table thead th {
     background: #f3f7fb;
     padding: 12px 14px;
@@ -79,6 +79,7 @@ body { --mobile-flag: false; }
     z-index: 2;
 }
 
+/* 表格列 Hover */
 .history-table tbody tr {
     transition: background 0.15s ease;
 }
@@ -91,15 +92,26 @@ body { --mobile-flag: false; }
     padding: 12px 14px;
     border-bottom: 1px solid #eef2f6;
     text-align: center;
-
-    /* 防止內容溢出 */
     white-space: normal;
     word-break: break-word;
     line-height: 1.5;
 }
 
+/* 桌面版天氣欄位（第 7 欄） */
+.history-table td:nth-child(7),
+.history-table td.weather-cell {
+    font-weight: 700;
+    color: #7fa4c4;
+    white-space: nowrap !important;
+}
 
 
+/* 座落於桌面版用的 score 欄位 */
+.score-cell {
+    white-space: nowrap !important;
+    text-align: center;
+    font-weight: 600;
+}
 
 /* 桌面版隱藏手機卡片列表 */
 @media (min-width: 481px) {
@@ -111,38 +123,42 @@ body { --mobile-flag: false; }
 /* ------------------------------------------------------
    📱 手機版卡片模式
 ------------------------------------------------------ */
-/* 手機版卡片模式 — 改成 600px */
 @media (max-width: 600px) {
 
-    /* 隱藏表格 */
+    /* ⛔ 隱藏桌面版表格 */
     .history-table-wrapper table {
         display: none;
     }
 
+    /* 📌 卡片列表外框 */
     .history-card-list {
         display: flex;
         flex-direction: column;
-        gap: 18px;
-        margin-top: 10px;
+        gap: 28px;   /* 改成更好的閱讀間距 */
+        margin-top: 20px;
         margin-left: auto;
         margin-right: auto;
         max-width: 100%;
+        margin-bottom: 40px;
     }
 
+    /* 📌 單張卡片 */
     .history-card {
         background: #ffffff;
-        padding: 18px 16px;
-        border-radius: 16px;
+        padding: 22px 20px;   /* iOS 質感 spacing */
+        border-radius: var(--radius);
         box-shadow: var(--shadow);
         border: 1px solid #e6eaf0;
     }
 
+    /* 卡片內部 row */
     .history-card .row {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 12px;
+        margin-bottom: 14px; /* 間距微調，閱讀更舒服 */
     }
 
+    /* Label (左側文字) */
     .history-card .label {
         color: #7b8a9c;
         font-size: 13px;
@@ -151,6 +167,7 @@ body { --mobile-flag: false; }
         flex-shrink: 0;
     }
 
+    /* 值（右側內容） */
     .history-card .row span:last-child {
         font-size: 15px;
         color: #4a4a4a;
@@ -158,23 +175,12 @@ body { --mobile-flag: false; }
         text-align: right;
         line-height: 1.5;
     }
-
-    
 }
 
-.history-card .row.score .value {
-    font-weight: 700; /* 只有 score 加粗 */
+/* ------------------------------------------------------
+   📌 手機版天氣欄位（第 6 row）
+------------------------------------------------------ */
+.history-card .row:nth-child(6) .value {
+    font-weight: 700;
     color: #7fa4c4;
-}
-
-
-.history-table td.weather-cell {
-    font-size: 20px;
-    white-space: nowrap !important;
-}
-
-.score-cell {
-    white-space: nowrap !important;
-    text-align: center;
-    font-weight: 600;
 }
