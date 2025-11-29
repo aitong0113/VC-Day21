@@ -9,12 +9,12 @@
     <!-- 外部 CSS -->
     <link rel="stylesheet" href="style2.css" />
 
-    <!-- 內嵌補充樣式 -->
+    <!-- 內嵌補充樣式（只保留基本框架，不覆蓋寬度） -->
     <style>
         body {
             font-family: 'Noto Sans TC', sans-serif;
             background: var(--bg-blue);
-            padding: 16px;
+            padding: 20px;
         }
 
         h1 {
@@ -28,14 +28,17 @@
 
 <body>
 
+    <!-- ⭐ 主標題 -->
     <h1>📘 我的心天氣紀錄</h1>
 
-    <!-- ⭐ 桌面表格＋手機卡片會插入在這 -->
-    <div class="history-table-wrapper"></div>
+    <!-- ⭐ 表格 / 卡片會插入在這裡 -->
+    <div class="history-table-wrapper">
+        <section id="historyOutput" class="history-section"></section>
+    </div>
 
-    <!-- ⭐ 桌面表格容器（script2.js 自動填入） -->
-    <section id="historyOutput" class="history-section"></section>
-
+    <!-- ⭐ JS -->
     <script src="script2.js"></script>
+
 </body>
+
 </html>
