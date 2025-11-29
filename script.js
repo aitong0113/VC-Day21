@@ -126,20 +126,19 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (sleep === 3) score += 0;
         else if (sleep === 2) score -= 2;
         else if (sleep === 1) score -= 4;
-        else if (sleep === 0) score -= 6;  // ⭐ 睡眠0 = 必為暴雨狀態
+        else if (sleep === 0) score -= 6;  // ⭐ 睡眠0 = 暴雨
 
 
         //------------------------------------------------------
-        // ⭐ 2. 身體扣分（累加）
+        // ⭐ 2. 身體扣分
         //------------------------------------------------------
         finalBody.forEach(b => {
             if (["明顯疲累", "胸悶"].includes(b)) score -= 2;
             if (["肩頸緊", "小頭暈"].includes(b)) score -= 1;
         });
 
-
         //------------------------------------------------------
-        // ⭐ 3. 心情扣分 / 加分（程度化）
+        // ⭐ 3. 心情扣分 / 加分
         //------------------------------------------------------
         finalMood.forEach(m => {
             if (m === "明顯低落") score -= 3;
@@ -151,15 +150,13 @@ document.addEventListener("DOMContentLoaded", () => {
             if (m === "穩定") score += 3;
         });
 
-
         //------------------------------------------------------
-        // ⭐ 4. AI 推測文字（輕權重）
+        // ⭐ 4. AI 文字推論
         //------------------------------------------------------
         score += (bodyAI.score + moodAI.score) * 0.2;
 
-
         //------------------------------------------------------
-        // ⭐ 5. 新天氣邏輯（最自然分布）
+        // ⭐ 5. 天氣邏輯
         //------------------------------------------------------
         let weather, reason, suggestion;
 
@@ -185,7 +182,6 @@ document.addEventListener("DOMContentLoaded", () => {
             suggestion = "停一下，好好照顧自己。";
         }
 
-
         //------------------------------------------------------
         // ⭐ UI Loading
         //------------------------------------------------------
@@ -195,7 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         //------------------------------------------------------
-        // ⭐ 寫入 Google Sheet
+        // ⭐ 寫入 Google Sheet（順序已修正）
         //------------------------------------------------------
         const payload = {
             userId: userAlias,
@@ -206,7 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
             weather,
             reason,
             suggestion,
-            note: moodFree + " / " + bodyFree
+            note: [moodFree, bodyFree].filter(x => x.trim() !== "").join(" / ")
         };
 
         await fetch(GAS_URL, {

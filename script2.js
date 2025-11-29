@@ -1,5 +1,5 @@
 //------------------------------------------------------
-// 心天氣紀錄（新版）
+// 心天氣紀錄（新版修正）
 //------------------------------------------------------
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -30,9 +30,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const userAlias = getUserAlias();
 
 
-    // ---------------------------------------------------
-    // 📄 使用你最新提供的 CSV URL
-    // ---------------------------------------------------
+    //---------------------------------------------------
+    // 📄 你的最新 CSV URL
+    //---------------------------------------------------
     const CSV_URL =
         "https://docs.google.com/spreadsheets/d/e/2PACX-1vReMWrHOhNT6Ia8CHhYBO7wWN7tADRCL8vFKJTAIwPnWOEwuZioYWEoOBX_bFY7pizn5VRpkRxpy29b/pub?output=csv";
 
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const output = document.getElementById("historyOutput");
 
-        // 🔍 過濾目前使用者
+        // ⭐ 過濾目前裝置的 userId
         const myData = dataRows.filter(
             r => (r[1] || "").trim() === userAlias.trim()
         );
@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // -------------------------
-        //  桌面版表格模式
+        // 🖥 桌面版表格
         // -------------------------
         let html = "<table class='history-table'><tr>";
         header.forEach(h => html += `<th>${h}</th>`);
@@ -76,27 +76,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
         myData.forEach(row => {
             html += "<tr>";
+
             row.forEach((col, i) => {
 
-                // ⭐ 移除換行符號（資料可能含 \n）
                 col = col.replace(/\n/g, "").trim();
 
                 let cls = "";
 
-                // ⭐ score 欄位不換行（i=4）
+                // ⭐ 第 6 欄（index=5）= score 不換行
                 if (i === 5) cls = "score-cell";
 
                 html += `<td class="${cls}">${col}</td>`;
             });
+
             html += "</tr>";
         });
 
         html += "</table>";
-
         output.innerHTML = html;
 
         // -------------------------
-        //  手機卡片模式
+        // 📱 手機模式卡片
         // -------------------------
         renderMobileCards(myData, header);
     }
@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 //------------------------------------------------------
-// 📱 手機卡片渲染
+// 📱 手機卡片渲染（修正版）
 //------------------------------------------------------
 
 function renderMobileCards(rows, header) {
@@ -127,14 +127,17 @@ function renderMobileCards(rows, header) {
         header.forEach((h, i) => (o[h] = r[i]));
 
         card.innerHTML = `
-    <div class="row"><span class="label">時間</span><span class="value">${o.timestamp}</span></div>
-    <div class="row"><span class="label">睡眠</span><span class="value">${o.sleep}</span></div>
-    <div class="row"><span class="label">身體</span><span class="value">${o.body}</span></div>
-    <div class="row"><span class="label">心情</span><span class="value">${o.mood}</span></div>
-    <div class="row score"><span class="label">分數</span><span class="value">${o.score}</span></div>
-    <div class="row"><span class="label">天氣</span><span class="value">${o.weather}</span></div>
-    <div class="row"><span class="label">建議</span><span class="value">${o.suggestion}</span></div>
-`;
+        <div class="row"><span class="label">時間</span><span class="value">${o.timestamp}</span></div>
+        <div class="row"><span class="label">睡眠</span><span class="value">${o.sleep}</span></div>
+        <div class="row"><span class="label">身體</span><span class="value">${o.body}</span></div>
+        <div class="row"><span class="label">心情</span><span class="value">${o.mood}</span></div>
+        <div class="row score"><span class="label">分數</span><span class="value">${o.score}</span></div>
+
+        <div class="row"><span class="label">天氣</span><span class="value">${o.weather}</span></div>
+        <div class="row"><span class="label">狀態解讀</span><span class="value">${o.reason}</span></div>
+        <div class="row"><span class="label">今日建議</span><span class="value">${o.suggestion}</span></div>
+        <div class="row"><span class="label">補充紀錄</span><span class="value">${o.note}</span></div>
+        `;
 
         cardList.appendChild(card);
     });
