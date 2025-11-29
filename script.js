@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     //------------------------------------------------------
-    // 📌 AI-style 語義分析（輕權重版）
+    // 📌 AI 語義分析（輕權重）
     //------------------------------------------------------
     function analyzeTextEmotion(text) {
         if (!text) return { score: 0, inferred: [] };
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     //------------------------------------------------------
-    // 🌈 分析 + 寫入 Google Sheet（最終穩定模型）
+    // 🌈 分析 + 寫入 Google Sheet
     //------------------------------------------------------
 
     const GAS_URL =
@@ -93,6 +93,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     btn.addEventListener("click", async () => {
 
+        //------------------------------------------------------
+        // 🔸 基本欄位：睡眠
+        //------------------------------------------------------
         const sleep = Number(document.getElementById("sleep").value);
 
         if (!sleep && sleep !== 0) {
@@ -101,21 +104,27 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+        //------------------------------------------------------
+        // 🔸 Checkbox + 自由輸入
+        //------------------------------------------------------
         const body = getCheckedValues("body-group");
         const mood = getCheckedValues("mood-group");
 
-        const bodyFree = document.getElementById("body-free").value;
-        const moodFree = document.getElementById("mood-free").value;
+        const bodyFree = document.getElementById("body-free").value.trim();
+        const moodFree = document.getElementById("mood-free").value.trim();
+        const directionFree = document.getElementById("direction-free").value.trim();
 
+        // AI 推論
         const bodyAI = analyzeTextEmotion(bodyFree);
         const moodAI = analyzeTextEmotion(moodFree);
 
+        // 合併 + 去重複
         const finalBody = [...new Set([...body, ...bodyAI.inferred])];
         const finalMood = [...new Set([...mood, ...moodAI.inferred])];
 
 
         //------------------------------------------------------
-        // ⭐ 1. 睡眠加權（最終心理模型版）
+        // ⭐ 1. 睡眠分數
         //------------------------------------------------------
         let score = 0;
 
@@ -126,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (sleep === 3) score += 0;
         else if (sleep === 2) score -= 2;
         else if (sleep === 1) score -= 4;
-        else if (sleep === 0) score -= 6;  // ⭐ 睡眠0 = 暴雨
+        else if (sleep === 0) score -= 6;
 
 
         //------------------------------------------------------
@@ -151,12 +160,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         //------------------------------------------------------
-        // ⭐ 4. AI 文字推論
+        // ⭐ 4. AI 自由輸入推論
         //------------------------------------------------------
         score += (bodyAI.score + moodAI.score) * 0.2;
 
+
         //------------------------------------------------------
-        // ⭐ 5. 天氣邏輯
+        // ⭐ 5. 天氣分類
         //------------------------------------------------------
         let weather, reason, suggestion;
 
@@ -182,8 +192,9 @@ document.addEventListener("DOMContentLoaded", () => {
             suggestion = "停一下，好好照顧自己。";
         }
 
+
         //------------------------------------------------------
-        // ⭐ UI Loading
+        // ⭐ UI Loading 動畫
         //------------------------------------------------------
         resultBox.style.display = "block";
         loadingText.style.display = "block";
@@ -191,18 +202,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         //------------------------------------------------------
-        // ⭐ 寫入 Google Sheet（順序已修正）
+        // ⭐ note 整合自由輸入（空白→ "-"）
+        //------------------------------------------------------
+        const finalNote =
+            [bodyFree, moodFree, directionFree]
+                .filter(x => x && x.trim() !== "")
+                .join(" / ") || "-";
+
+
+        //------------------------------------------------------
+        // ⭐ 寫入 Google Sheet
         //------------------------------------------------------
         const payload = {
             userId: userAlias,
             sleep,
-            body: finalBody,
-            mood: finalMood,
+            body: finalBody.length ? finalBody.join("、") : "-",
+            mood: finalMood.length ? finalMood.join("、") : "-",
             score,
             weather,
             reason,
             suggestion,
-            note: [moodFree, bodyFree].filter(x => x.trim() !== "").join(" / ")
+            note: finalNote
         };
 
         await fetch(GAS_URL, {
@@ -214,7 +234,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         //------------------------------------------------------
-        // ⭐ 顯示結果
+        // ⭐ 顯示結果（0.9 秒後）
         //------------------------------------------------------
         setTimeout(() => {
             loadingText.style.display = "none";
@@ -232,7 +252,5 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
             `;
         }, 900);
-
     });
-
 });
